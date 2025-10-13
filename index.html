@@ -12,14 +12,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* Custom Styles for a modern, sleek look */
+        /* Custom Styles inspired by tsion.html for a modern, sleek look */
         :root {
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;
-            --card-bg: rgba(30, 41, 59, 0.5);
+            --card-bg: rgba(30, 41, 59, 0.7);
             --border-color: rgba(255, 255, 255, 0.1);
             --primary-accent: #3b82f6;
             --secondary-accent: #10b981;
+            --tertiary-accent: #8b5cf6;
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
@@ -27,11 +28,12 @@
 
         .light-mode {
             --bg-primary: #f1f5f9;
-            --bg-secondary: #e2e8f0;
-            --card-bg: rgba(255, 255, 255, 0.5);
+            --bg-secondary: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.8);
             --border-color: rgba(0, 0, 0, 0.1);
             --primary-accent: #2563eb;
             --secondary-accent: #059669;
+            --tertiary-accent: #7c3aed;
             --text-primary: #1e293b;
             --text-secondary: #475569;
             --text-muted: #64748b;
@@ -180,7 +182,7 @@
     <div id="auth-view" class="hidden w-full max-w-md">
         <div class="glass-card rounded-2xl p-8">
             <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 text-transparent bg-clip-text">ExamPrep Pro</h1>
+                <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">ExamPrep Pro</h1>
                 <p class="text-text-muted mt-2">Your AI-Powered Study Partner</p>
             </div>
 
@@ -224,18 +226,18 @@
     <div id="dashboard-view" class="hidden w-full max-w-6xl">
         <div class="glass-card rounded-2xl p-8">
             <!-- Dashboard Header -->
-            <header class="flex flex-wrap justify-between items-center pb-6 border-b border-border-color">
+            <header class="flex flex-wrap justify-between items-center pb-6 border-b border-border-color gap-4">
                 <div>
                     <h2 class="text-3xl font-bold">Welcome, <span id="user-name"></span>!</h2>
                     <p class="text-text-muted">Let's get you ready for your exam.</p>
                 </div>
-                <div class="flex items-center gap-6 mt-4 md:mt-0">
+                <div class="flex items-center gap-4">
                     <div class="text-center">
                         <div class="text-3xl font-bold text-yellow-400 flex items-center gap-2"><i class="fas fa-fire"></i> <span id="streak-count">0</span></div>
                         <div class="text-xs text-text-muted">Day Streak</div>
                     </div>
                     <div id="user-tier-badge" class="px-4 py-1 rounded-full font-semibold text-sm"></div>
-                    <button id="theme-toggle-btn" class="btn-secondary px-4 py-2 rounded-lg font-semibold w-12 h-12 flex items-center justify-center text-lg"><i class="fas fa-sun"></i></button>
+                    <button id="theme-toggle-btn" title="Toggle Theme" class="btn-secondary rounded-full w-12 h-12 flex items-center justify-center text-lg"><i class="fas fa-sun"></i></button>
                     <button id="logout-button" class="btn-secondary px-4 py-2 rounded-lg font-semibold"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>
                 </div>
             </header>
@@ -281,8 +283,9 @@
                     <p class="text-text-muted text-sm" id="test-view-subtitle"></p>
                 </div>
                 <div class="flex items-center gap-4">
+                    <span class="text-text-secondary hidden md:block">Signed in as <strong id="test-view-user-name"></strong></span>
                     <div id="test-timer-display" class="text-2xl font-mono font-bold bg-red-500/20 text-red-300 px-4 py-2 rounded-lg"></div>
-                    <button id="finish-test-btn" class="btn-secondary px-4 py-2 rounded-lg font-semibold"><i class="fas fa-flag-checkered mr-2"></i>Finish Test</button>
+                    <button id="finish-test-btn" class="btn-secondary px-4 py-2 rounded-lg font-semibold"><i class="fas fa-flag-checkered mr-2"></i>Finish</button>
                     <button id="back-to-dashboard-btn" class="btn-secondary px-4 py-2 rounded-lg font-semibold"><i class="fas fa-arrow-left mr-2"></i>Dashboard</button>
                 </div>
              </header>
@@ -290,7 +293,7 @@
             <!-- Test Body -->
              <div class="grid lg:grid-cols-3 gap-6 mt-6">
                 <!-- Question Panel (takes 2 columns) -->
-                <div class="lg:col-span-2 bg-bg-primary/50 p-6 rounded-xl">
+                <div class="lg:col-span-2 bg-black/20 p-6 rounded-xl">
                     <div class="flex justify-between items-center mb-4">
                         <p class="font-semibold" id="question-number-display"></p>
                         <button id="mark-review-btn" class="btn-secondary px-4 py-2 text-sm rounded-lg"><i class="far fa-flag"></i> Mark for Review</button>
@@ -306,15 +309,17 @@
 
                 <!-- Sidebar (takes 1 column) -->
                 <div class="space-y-6">
-                    <div class="bg-bg-primary/50 p-4 rounded-xl">
+                    <div class="bg-black/20 p-4 rounded-xl">
                         <h3 class="font-semibold mb-3">Question Navigator</h3>
                         <div id="question-grid-container" class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-5 gap-2"></div>
                     </div>
-                    <div id="desmos-container" class="bg-bg-primary/50 p-4 rounded-xl hidden">
-                        <h3 class="font-semibold mb-3">Graphing Calculator</h3>
-                        <iframe id="desmosFrame" src="https://www.desmos.com/calculator" width="100%" height="300"></iframe>
+                    <div id="desmos-card" class="bg-black/20 p-4 rounded-xl hidden">
+                         <h3 class="font-semibold mb-3">Tools</h3>
+                         <button id="open-desmos-btn" class="w-full btn-secondary py-2 rounded-lg font-semibold text-sm">
+                             <i class="fas fa-calculator mr-2"></i> Open Calculator
+                         </button>
                     </div>
-                    <div id="test-ai-tutor-container" class="relative bg-bg-primary/50 p-4 rounded-xl">
+                    <div id="test-ai-tutor-container" class="relative bg-black/20 p-4 rounded-xl">
                          <h3 class="font-semibold mb-2">AI Tutor</h3>
                          <p class="text-sm text-text-muted mb-3">Stuck? Ask Gemini for a hint!</p>
                          <button id="ask-ai-btn" class="w-full btn-primary py-2 rounded-lg font-semibold text-sm">
@@ -347,6 +352,17 @@
             <div id="level-selection-grid" class="grid md:grid-cols-3 gap-6">
                 <!-- Level cards will be populated here -->
             </div>
+        </div>
+    </div>
+    
+    <!-- Desmos Modal -->
+    <div id="desmos-modal" class="fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden z-50">
+        <div class="glass-card rounded-2xl p-4 w-full max-w-4xl h-[80vh] flex flex-col">
+             <div class="flex justify-between items-center mb-2">
+                <h2 class="text-xl font-bold">Graphing Calculator</h2>
+                <button id="desmos-close-btn" class="text-2xl hover:text-red-400 transition-colors">&times;</button>
+            </div>
+            <iframe id="desmosFrame" src="https://www.desmos.com/calculator" class="w-full h-full rounded-lg border-none"></iframe>
         </div>
     </div>
 
@@ -418,7 +434,7 @@
         
         // --- Auth State Change Listener ---
         onAuthStateChanged(auth, async (user) => {
-            views.loading.classList.add('hidden');
+            views.loading.classList.remove('hidden');
             if (user) {
                 const userDocRef = doc(db, "users", user.uid);
                 const userDoc = await getDoc(userDocRef);
@@ -620,7 +636,7 @@
             showView('loading');
             try {
                 const testDoc = await getDoc(doc(db, "tests", testId));
-                if (!testDoc.exists()) throw new Error(`Test data for ${testId} not found in the database. Please run the one-time database setup.`);
+                if (!testDoc.exists()) throw new Error(`Test data for ${testId} not found in the database. Please run the one-time database setup from the login page.`);
 
                 const testData = testDoc.data();
                 
@@ -650,6 +666,7 @@
         }
 
         function setupTestView() {
+            document.getElementById('test-view-user-name').textContent = currentUser.displayName;
             document.getElementById('back-to-dashboard-btn').onclick = () => {
                 if(confirm("Are you sure you want to exit? Your progress will not be saved.")) {
                     clearInterval(testTimerInterval);
@@ -708,7 +725,7 @@
             const options = question.options || question.opts;
             options.forEach((opt, index) => {
                 const optEl = document.createElement('div');
-                optEl.className = 'option p-4 border-2 border-border-color rounded-lg cursor-pointer hover:border-primary-accent';
+                optEl.className = 'option p-4 rounded-lg cursor-pointer hover:border-primary-accent';
                 optEl.textContent = opt;
                 
                 const sectionKey = `${currentSection}.${currentModule}`;
@@ -720,7 +737,7 @@
                 optionsContainer.appendChild(optEl);
             });
             
-            document.getElementById('desmos-container').style.display = currentSection === 'math' ? 'block' : 'none';
+            document.getElementById('desmos-card').style.display = currentSection === 'math' ? 'block' : 'none';
             
             const askAiBtn = document.getElementById('ask-ai-btn');
             const aiContainer = document.getElementById('test-ai-tutor-container');
@@ -732,7 +749,7 @@
                 askAiBtn.disabled = false;
                 askAiBtn.innerHTML = `<i class="fas fa-robot mr-2"></i> Get a Hint`;
                 aiContainer.classList.remove('disabled-feature');
-                 aiContainer.classList.add('premium-feature');
+                aiContainer.classList.add('premium-feature');
             }
             
             updateNavButtons();
@@ -780,7 +797,7 @@
             sectionData.forEach((q, index) => {
                 const item = document.createElement('button');
                 item.textContent = index + 1;
-                let classes = 'grid-item h-10 w-10 flex items-center justify-center rounded-md font-semibold border-2 border-border-color transition-colors';
+                let classes = 'grid-item h-10 w-10 flex items-center justify-center rounded-md font-semibold transition-colors';
                 if (currentTestState.answers[sectionKey]?.[index] !== undefined) classes += ' answered';
                 if (currentTestState.marked[`${sectionKey}.${index}`]) classes += ' marked';
                 if (index === currentTestState.currentQuestionIndex) classes += ' current';
@@ -932,6 +949,10 @@
             document.getElementById('modal').classList.remove('hidden');
         }
         document.getElementById('modal-close-btn').onclick = () => document.getElementById('modal').classList.add('hidden');
+        
+        document.getElementById('open-desmos-btn').onclick = () => document.getElementById('desmos-modal').classList.remove('hidden');
+        document.getElementById('desmos-close-btn').onclick = () => document.getElementById('desmos-modal').classList.add('hidden');
+
         function showPrivacyPolicy() { 
             const policyText = `
                 <h3 class="font-bold text-lg mb-2">Privacy Policy</h3>
@@ -987,97 +1008,18 @@
             setupStatus.classList.add('text-yellow-400');
 
             try {
-                // This object contains all the questions from your original files.
                 const testData = {
-    "SAT-Basic": {
-        "timeLimit": 134,
-        "reading": {
-            "module1": [{"id": 1, "type": "mc", "q": "Passage EXCERPT: \"The city’s older neighborhoods were known for their tree-lined streets and small shops.\" Question: The phrase \"tree-lined\" most nearly means:", "options": ["with lots of trees", "lined with tree-shaped buildings", "planted along sidewalks", "dominated by tree commerce"], "correct": 0, "explanation": "'Tree-lined' describes streets with trees along them.", "difficulty": "easy"}, {"id": 2, "type": "mc", "q": "In the passage, the author uses the example of a small grocery to illustrate:", "options": ["the decline of retail", "the persistence of local businesses", "a national economic trend", "a legal regulation"], "correct": 1, "explanation": "The anecdote shows how local business persists despite trends.", "difficulty": "easy"}, {"id": 3, "type": "mc", "q": "Which choice best states the main idea of the passage excerpted above?", "options": ["Historic appearance matters more than utility", "Neighborhoods adapt to demographic changes", "Urban renewal always harms residents", "Small shops cannot survive."], "correct": 1, "explanation": "The passage focuses on adaptation to change.", "difficulty": "easy"}, {"id": 4, "type": "mc", "q": "Which sentence from the passage provides the best evidence for the author's claim that residents value community spaces?", "options": ["'The park hosted concerts every summer.'", "'Shops closed by the end of the year.'", "'Traffic increased along the avenue.'", "'A new mall opened nearby.'"], "correct": 0, "explanation": "Hosting concerts shows valuing community spaces.", "difficulty": "medium"}, {"id": 5, "type": "mc", "q": "Which transition would best join these two sentences: 'The program cost $2 million. ______, results were promising.'", "options": ["Therefore", "Nevertheless", "Consequently", "However"], "correct": 1, "explanation": "'Nevertheless' signals contrast when expense did not prevent positive results.", "difficulty": "medium"}, {"id": 6, "type": "mc", "q": "Choose the revision that corrects the misplaced modifier: \"Rushing to finish the exam, the time limit distracted the student.\"", "options": ["Rushing to finish the exam, the student felt the time limit.", "Rushing, the time limit distracted the student.", "The time limit distracted the student, rushing to finish.", "Rushing to finish the exam, the exam distracted the student."], "correct": 0, "explanation": "Places the student as the one rushing.", "difficulty": "medium"}, {"id": 7, "type": "mc", "q": "An author's tone that is 'bemused' most nearly means:", "options": ["angry", "confused and slightly amused", "serious and scholarly", "apathetic"], "correct": 1, "explanation": "Bemused = mildly confused and amused.", "difficulty": "easy"}, {"id": 8, "type": "mc", "q": "Which statement best describes the relationship between Passage A and Passage B if Passage B challenges Passage A's methodology?", "options": ["They agree on conclusions", "They present identical evidence", "They critique one another", "They are unrelated"], "correct": 2, "explanation": "Passage B critiques A's methods.", "difficulty": "medium"}, {"id": 9, "type": "mc", "q": "Which word most nearly means 'transient' as used in the sentence: \"The success was transient, fading after months.\"", "options": ["permanent", "temporary", "obvious", "hidden"], "correct": 1, "explanation": "Transient = temporary.", "difficulty": "easy"}, {"id": 10, "type": "mc", "q": "Which revision improves concision? \"He was of the opinion that the law should be changed.\"", "options": ["He opined the law should change.", "He believed the law should be changed.", "He thought that the law should be changed.", "He was of the opinion that the law should change."], "correct": 1, "explanation": "'He believed' is concise and clear.", "difficulty": "medium"}],
-            "module2": [{"id": 1, "type": "mc", "q": "What rhetorical strategy does the author primarily use in the final paragraph to undermine an opposing claim?", "options": ["Appeal to emotion", "Use of empirical counterevidence", "Exaggeration", "Sarcasm"], "correct": 1, "explanation": "The author cites data to undermine opposition.", "difficulty": "hard"}, {"id": 2, "type": "mc", "q": "Which choice most weakens the author's argument that tariffs increase domestic manufacturing?", "options": ["Imports decreased", "Local prices rose significantly", "Employment increased", "New factories opened"], "correct": 1, "explanation": "Rising local prices can negate benefits of tariffs.", "difficulty": "hard"}, {"id": 3, "type": "mc", "q": "Which inference can best be drawn from the passage about urban migration?", "options": ["It is declining", "It favors smaller cities", "It accelerates economic diversification", "It has no impact"], "correct": 2, "explanation": "Text suggests migration drives diversification.", "difficulty": "hard"}, {"id": 4, "type": "mc", "q": "Which phrase best captures the nuance in: 'Her findings are suggestive rather than conclusive.'", "options": ["Definitive", "Indicative but not certain", "Unrelated", "Refuted"], "correct": 1, "explanation": "Suggestive = indicates but not conclusive.", "difficulty": "hard"}]
-        },
-        "math": {
-            "module1": [{"id": 1, "type": "mc", "q": "If 3x + 7 = 19, what is x?", "options": ["2", "3", "4", "5"], "correct": 2, "explanation": "3x = 19 - 7 -> 3x = 12 -> x = 4", "difficulty": "easy"}, {"id": 2, "type": "mc", "q": "If f(x)=2x+1, what is f(5)?", "options": ["9", "10", "11", "12"], "correct": 2, "explanation": "f(5) = 2(5) + 1 = 10 + 1 = 11", "difficulty": "easy"}, {"id": 3, "type": "mc", "q": "What is 25% of 120?", "options": ["20", "24", "30", "40"], "correct": 2, "explanation": "0.25 * 120 = 30", "difficulty": "easy"}, {"id": 4, "type": "mc", "q": "A right triangle has legs 3 and 4. What is its area?", "options": ["6", "7.5", "12", "24"], "correct": 0, "explanation": "Area = (1/2) * base * height = (1/2) * 3 * 4 = 6", "difficulty": "easy"}],
-            "module2": [{"id": 1, "type": "mc", "q": "If f(x)=x^2 - 4x + 3, what are the zeros of the function?", "options": ["1 and 3", "-1 and -3", "2 and -2", "3 and -3"], "correct": 0, "explanation": "Set f(x)=0 -> x^2 - 4x + 3 = 0 -> (x-1)(x-3)=0. Zeros are x=1 and x=3.", "difficulty": "hard"}, {"id": 2, "type": "mc", "q": "Solve the system: x + y = 10 and 2x - y = 3. What is the value of x?", "options": ["13/3", "4", "5", "7"], "correct": 0, "explanation": "Add the two equations: (x+y) + (2x-y) = 10+3 -> 3x = 13 -> x = 13/3", "difficulty": "hard"}]
-        }
-    },
-    "SAT-Intermediate": {
-        "timeLimit": 134,
-        "reading": {
-            "module1": [{"id": 1, "type": "mc", "q": "Passage: \"The author's use of polysyndeton...\"", "options": ["..."], "correct": 1}, {"id": 2, "type": "mc", "q": "In analyzing the author's argument...\"", "options": ["..."], "correct": 0}],
-            "module2": [{"id": 1, "type": "mc", "q": "The author's critique of positivism...\"", "options": ["..."], "correct": 1}]
-        },
-        "math": {
-            "module1": [{"id": 1, "type": "mc", "q": "If the complex number z = 3 + 4i...\"", "options": ["..."], "correct": 2}],
-            "module2": [{"id": 1, "type": "mc", "q": "If the vectors u = (3, 4)...\"", "options": ["..."], "correct": 2}]
-        }
-    },
-    "SAT-Advanced": {
-        "timeLimit": 134,
-        "reading": {
-            "module1": [{"id": 1, "type": "mc", "q": "Passage: \"The author's use of polysyndeton...\"", "options": ["..."], "correct": 1}],
-            "module2": [{"id": 1, "type": "mc", "q": "The author's critique of positivism...\"", "options": ["..."], "correct": 1}]
-        },
-        "math": {
-            "module1": [{"id": 1, "type": "mc", "q": "If the function f is defined by f(x) = x² - 4x + 7...\"", "options": ["..."], "correct": 1}],
-            "module2": [{"id": 1, "type": "mc", "q": "If the function f is defined by f(x) = (x² - 1)/(x - 1)...\"", "options": ["..."], "correct": 2}]
-        }
-    },
-    "IELTS-Basic": {
-        "timeLimit": 120,
-        "listening": {
-            "module1": [{"id": 1, "q": "What is the main purpose of the talk?", "audio": "...", "options": ["..."], "correct": 1}, {"id": 2, "q": "Where is the Student Services office located?", "audio": "...", "options": ["..."], "correct": 2}]
-        },
-        "reading": {
-            "module1": [{"id": 1, "passage": "The Industrial Revolution...", "q": "When did the Industrial Revolution begin?", "opts": ["..."], "correct": 1}]
-        },
-        "writing": {
-            "module1": [{"id": 1, "type": "task1", "prompt": "The chart below shows..."}, {"id": 2, "type": "task2", "prompt": "Some people believe that it is best..."}]
-        }
-    },
-    "IELTS-Intermediate": {
-        "timeLimit": 165,
-        "listening": {
-            "module1": [{"q": "What is the main purpose of the museum's new exhibition?", "opts": ["..."], "correct": 1, "audio": "..."}]
-        },
-        "reading": {
-            "module1": [{"id": 1, "passage": "Climate change refers to...", "q": "What is the main cause of climate change since the 1800s?", "opts": ["..."], "correct": 1}]
-        },
-        "writing": {
-            "module1": [{"id": 1, "type": "task1", "prompt": "The table below shows..."}, {"id": 2, "type": "task2", "prompt": "Some people think that parents should teach..."}]
-        }
-    },
-    "IELTS-Advanced": {
-        "timeLimit": 165,
-        "listening": {
-            "module1": [{"id": 1, "q": "What paradoxical relationship...?", "opts": ["..."], "correct": 1, "audio": "..."}]
-        },
-        "reading": {
-            "module1": [{"id": 1, "passage": "The epistemological crisis...", "q": "According to the passage, what characterizes the post-modern condition?", "opts": ["..."], "correct": 1}]
-        },
-        "writing": {
-            "module1": [{"id": 1, "type": "task1", "prompt": "The diagrams illustrate..."}, {"id": 2, "type": "task2", "prompt": "Some argue that artificial intelligence..."}]
-        }
-    },
-    "TOEFL-Basic": {
-        "timeLimit": 30,
-        "reading": {
-            "module1": [{"passage": "The Benefits of Learning a Second Language", "q": "What is the main idea of the passage?", "options": ["..."], "correct": 1, "explanation": "..."}, {"passage": "The Benefits of Learning a Second Language", "q": "According to the passage, what cognitive benefit...?", "options": ["..."], "correct": 1, "explanation": "..."}]
-        }
-    },
-    "TOEFL-Intermediate": {
-        "timeLimit": 45,
-        "reading": {
-            "module1": [{"passage": "The Cognitive Benefits of Bilingualism", "q": "What is the main purpose of the passage?", "options": ["..."], "correct": 1, "explanation": "..."}, {"passage": "The Cognitive Benefits of Bilingualism", "q": "The word 'confer' in paragraph 2 is closest in meaning to:", "options": ["..."], "correct": 1, "explanation": "..."}]
-        }
-    },
-    "TOEFL-Advanced": {
-        "timeLimit": 60,
-        "reading": {
-            "module1": [{"passage": "Epistemological Implications of Quantum Decoherence...", "q": "Which of the following best describes the author's primary purpose...?", "options": ["..."], "correct": 1, "explanation": "..."}, {"passage": "Epistemological Implications of Quantum Decoherence...", "q": "The word 'engendered' in the first paragraph is closest in meaning to:", "options": ["..."], "correct": 1, "explanation": "..."}]
-        }
-    }
+    "SAT-Basic": { "timeLimit": 134, "reading": { "module1": [ { "id": 1, "type": "mc", "q": "Passage EXCERPT: \"The city’s older neighborhoods were known for their tree-lined streets and small shops.\" Question: The phrase \"tree-lined\" most nearly means:", "options": ["with lots of trees", "lined with tree-shaped buildings", "planted along sidewalks", "dominated by tree commerce"], "correct": 0, "explanation": "'Tree-lined' describes streets with trees along them.", "difficulty": "easy" }, { "id": 2, "type": "mc", "q": "In the passage, the author uses the example of a small grocery to illustrate:", "options": ["the decline of retail", "the persistence of local businesses", "a national economic trend", "a legal regulation"], "correct": 1, "explanation": "The anecdote shows how local business persists despite trends.", "difficulty": "easy" }, { "id": 3, "type": "mc", "q": "Which choice best states the main idea of the passage excerpted above?", "options": ["Historic appearance matters more than utility", "Neighborhoods adapt to demographic changes", "Urban renewal always harms residents", "Small shops cannot survive."], "correct": 1, "explanation": "The passage focuses on adaptation to change.", "difficulty": "easy" } ], "module2": [ { "id": 1, "type": "mc", "q": "What rhetorical strategy does the author primarily use in the final paragraph to undermine an opposing claim?", "options": ["Appeal to emotion", "Use of empirical counterevidence", "Exaggeration", "Sarcasm"], "correct": 1, "explanation": "The author cites data to undermine opposition.", "difficulty": "hard" } ] }, "math": { "module1": [ { "id": 1, "type": "mc", "q": "If 3x + 7 = 19, what is x?", "options": ["2", "3", "4", "5"], "correct": 2, "explanation": "3x = 19 - 7 -> 3x = 12 -> x = 4", "difficulty": "easy" } ], "module2": [ { "id": 1, "type": "mc", "q": "If f(x)=x^2 - 4x + 3, what are the zeros of the function?", "options": ["1 and 3", "-1 and -3", "2 and -2", "3 and -3"], "correct": 0, "explanation": "Set f(x)=0 -> x^2 - 4x + 3 = 0 -> (x-1)(x-3)=0. Zeros are x=1 and x=3.", "difficulty": "hard" } ] } },
+    "SAT-Intermediate": { "timeLimit": 134, "reading": { "module1": [ { "id": 1, "type": "mc", "q": "Passage: \"The author's use of polysyndeton...\"", "options": ["The omission of conjunctions", "The repetition of conjunctions", "The use of parallel structure", "The inversion of word order"], "correct": 1, "explanation": "Polysyndeton is a rhetorical device involving the deliberate use of multiple conjunctions in close succession.", "difficulty": "hard" }, { "id": 2, "type": "mc", "q": "In analyzing the author's argument about postcolonial literature...\"", "options": ["Evidence of similar themes in pre-colonial texts", "A close reading of the author's use of metaphor", "Biographical information about the author", "Contemporary critical reviews of the work"], "correct": 0, "explanation": "Evidence of similar themes in pre-colonial texts would undermine the author's claim about the uniqueness of postcolonial literature.", "difficulty": "hard" } ], "module2": [ { "id": 1, "type": "mc", "q": "The author's critique of positivism...\"", "options": ["its overreliance on quantitative methods", "its failure to account for researcher subjectivity", "its rejection of empirical evidence", "its dependence on theoretical frameworks"], "correct": 1, "explanation": "The passage specifically critiques positivism for neglecting the role of researcher subjectivity in the construction of knowledge.", "difficulty": "hard" } ] }, "math": { "module1": [ { "id": 1, "type": "mc", "q": "If the complex number z = 3 + 4i...\"", "options": ["5", "7", "25", "49"], "correct": 2, "explanation": "First, z² = (3+4i)² = 9 + 24i + 16i² = 9 + 24i - 16 = -7 + 24i. Then |z²| = √((-7)² + 24²) = √(49 + 576) = √625 = 25.", "difficulty": "hard" } ], "module2": [ { "id": 1, "type": "mc", "q": "If the vectors u = (3, 4)...\"", "options": ["2a = 3b", "3a = 2b", "a = -2b", "a = 2b"], "correct": 2, "explanation": "u·w = 3a + 4b = 0, v·w = 2a - b = 0. From second: b=2a. Substitute in first: 3a+4(2a)=11a=0 → a=0, then b=0.", "difficulty": "hard" } ] } },
+    "SAT-Advanced": { "timeLimit": 134, "reading": { "module1": [ { "id": 1, "type": "mc", "q": "Passage: \"The author's use of polysyndeton...\"", "options": ["The omission of conjunctions", "The repetition of conjunctions", "The use of parallel structure", "The inversion of word order"], "correct": 1, "explanation": "Polysyndeton is a rhetorical device involving the deliberate use of multiple conjunctions in close succession.", "difficulty": "hard" } ], "module2": [ { "id": 1, "type": "mc", "q": "The author's critique of positivism...\"", "options": ["its overreliance on quantitative methods", "its failure to account for researcher subjectivity", "its rejection of empirical evidence", "its dependence on theoretical frameworks"], "correct": 1, "explanation": "The passage specifically critiques positivism for neglecting the role of researcher subjectivity in the construction of knowledge.", "difficulty": "hard" } ] }, "math": { "module1": [ { "id": 1, "type": "mc", "q": "If the function f is defined by f(x) = x² - 4x + 7...\"", "options": ["2", "4", "6", "8"], "correct": 1, "explanation": "First, g(2) = 2(2) - 3 = 1. Then f(g(2)) = f(1) = 1² - 4(1) + 7 = 1 - 4 + 7 = 4.", "difficulty": "hard" } ], "module2": [ { "id": 1, "type": "mc", "q": "If the function f is defined by f(x) = (x² - 1)/(x - 1)...\"", "options": ["0", "1", "2", "3"], "correct": 2, "explanation": "Simplify: (x²-1)/(x-1) = (x-1)(x+1)/(x-1) = x+1 for x≠1. So as x→1, f(x)→2. Assign f(1)=2.", "difficulty": "hard" } ] } },
+    "IELTS-Basic": { "timeLimit": 120, "listening": { "module1": [ { "id": 1, "q": "What is the main purpose of the talk?", "audio": "Welcome everyone to our university's orientation week. This session is designed to introduce you to the main campus facilities.", "options": ["To introduce course requirements", "To discuss campus facilities", "To explain grading policies", "To welcome new students"], "correct": 1 }, { "id": 2, "q": "Where is the Student Services office located?", "audio": "If you need any help with enrollment or accommodation, you can visit the Student Services office. It's on the second floor of the Administration building, right next to the finance department.", "options": ["Next to the library", "In the Student Union building", "On the second floor of the Administration building", "Beside the cafeteria"], "correct": 2 } ] }, "reading": { "module1": [ { "id": 1, "passage": "The Industrial Revolution...", "q": "When did the Industrial Revolution begin?", "opts": ["Late 17th century", "Late 18th century", "Early 19th century", "Mid 19th century"], "correct": 1 } ] }, "writing": { "module1": [ { "id": 1, "type": "task1", "prompt": "The chart below shows the percentage of the population..." }, { "id": 2, "type": "task2", "prompt": "Some people believe that it is best to accept a bad situation..." } ] } },
+    "IELTS-Intermediate": { "timeLimit": 165, "listening": { "module1": [ { "q": "What is the main purpose of the museum's new exhibition?", "opts": ["To showcase local artists", "To highlight historical artifacts", "To promote environmental awareness", "To display technological innovations"], "correct": 1, "audio": "Welcome to the City Museum..." } ] }, "reading": { "module1": [ { "id": 1, "passage": "Climate change refers to...", "q": "What is the main cause of climate change since the 1800s?", "opts": ["Natural cycles", "Human activities", "Solar radiation", "Volcanic eruptions"], "correct": 1 } ] }, "writing": { "module1": [ { "id": 1, "type": "task1", "prompt": "The table below shows..." }, { "id": 2, "type": "task2", "prompt": "Some people think that parents should teach..." } ] } },
+    "IELTS-Advanced": { "timeLimit": 165, "listening": { "module1": [ { "id": 1, "q": "What paradoxical relationship...?", "opts": ["Direct proportionality", "Inverse correlation with nuanced exceptions", "Complete independence", "Cyclical interdependence"], "correct": 1, "audio": "While examining the trajectory..." } ] }, "reading": { "module1": [ { "id": 1, "passage": "The epistemological crisis...", "q": "According to the passage, what characterizes the post-modern condition?", "opts": ["Rejection of all knowledge claims", "Incredulity toward meta-narratives", "Return to classical epistemology", "Acceptance of scientific positivism"], "correct": 1 } ] }, "writing": { "module1": [ { "id": 1, "type": "task1", "prompt": "The diagrams illustrate..." }, { "id": 2, "type": "task2", "prompt": "Some argue that artificial intelligence..." } ] } },
+    "TOEFL-Basic": { "timeLimit": 30, "reading": { "module1": [ { "passage": "The Benefits of Learning a Second Language", "q": "What is the main idea of the passage?", "options": ["The history of language learning methods", "The benefits of learning multiple languages", "The difficulty of becoming bilingual", "The best languages to learn for business"], "correct": 1, "explanation": "..." }, { "passage": "The Benefits of Learning a Second Language", "q": "According to the passage, what cognitive benefit...?", "options": ["Better physical health", "Improved memory and problem-solving skills", "Increased creativity in arts", "Better mathematical abilities"], "correct": 1, "explanation": "..." } ] } },
+    "TOEFL-Intermediate": { "timeLimit": 45, "reading": { "module1": [ { "passage": "The Cognitive Benefits of Bilingualism", "q": "What is the main purpose of the passage?", "options": ["To argue that bilingualism causes cognitive confusion", "To present recent research on cognitive advantages of bilingualism", "To compare different methods of language acquisition", "To discuss the history of bilingual education"], "correct": 1, "explanation": "..." }, { "passage": "The Cognitive Benefits of Bilingualism", "q": "The word 'confer' in paragraph 2 is closest in meaning to:", "options": ["Remove", "Grant or provide", "Complicate", "Delay"], "correct": 1, "explanation": "..." } ] } },
+    "TOEFL-Advanced": { "timeLimit": 60, "reading": { "module1": [ { "passage": "Epistemological Implications of Quantum Decoherence...", "q": "Which of the following best describes the author's primary purpose...?", "options": ["To unequivocally endorse quantum cognition models...", "To provide a balanced analysis of quantum approaches...", "To dismiss quantum cognition as pseudoscientific...", "To advocate for the immediate adoption..."], "correct": 1, "explanation": "..." }, { "passage": "Epistemological Implications of Quantum Decoherence...", "q": "The word 'engendered' in the first paragraph is closest in meaning to:", "options": ["Prevented or obstructed", "Given birth to or produced", "Simplified or reduced", "Challenged or questioned"], "correct": 1, "explanation": "..." } ] } }
 };
-
+                
                 const batch = writeBatch(db);
                 for (const testId in testData) {
                     const docRef = doc(db, "tests", testId);
