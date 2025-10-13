@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ExamPrep Pro | Login</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -85,8 +82,8 @@
         }
         
         .btn-warning {
-             background: linear-gradient(135deg, #f59e0b, #d97706);
-             color: white;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
         }
         
         .btn-warning:hover {
@@ -127,13 +124,13 @@
         }
         
         #desmosFrame {
-             border: 1px solid var(--border-color);
-             border-radius: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
         }
 
         .option {
-             transition: all 0.2s ease;
-             border: 2px solid var(--border-color);
+            transition: all 0.2s ease;
+            border: 2px solid var(--border-color);
         }
         .option.selected {
             border-color: var(--primary-accent);
@@ -172,13 +169,11 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <!-- Loading Spinner (initially visible) -->
     <div id="loading-view" class="flex flex-col items-center gap-4">
         <div class="loader"></div>
         <p class="text-lg text-text-secondary">Initializing ExamPrep Pro...</p>
     </div>
     
-    <!-- Auth View (Login/Sign-up) -->
     <div id="auth-view" class="hidden w-full max-w-md">
         <div class="glass-card rounded-2xl p-8">
             <div class="text-center mb-8">
@@ -186,9 +181,7 @@
                 <p class="text-text-muted mt-2">Your AI-Powered Study Partner</p>
             </div>
 
-            <!-- Auth Forms Container -->
             <div id="auth-forms">
-                <!-- Login Form -->
                 <form id="login-form" class="space-y-4">
                     <input type="text" id="login-identifier" placeholder="Username or Email" class="w-full p-3 rounded-lg form-input" required>
                     <input type="password" id="login-password" placeholder="Password" class="w-full p-3 rounded-lg form-input" required>
@@ -196,7 +189,6 @@
                     <p class="text-sm text-center text-text-muted">Don't have an account? <a href="#" id="show-signup" class="font-semibold text-primary-accent hover:underline">Sign Up</a></p>
                 </form>
 
-                <!-- Sign-up Form -->
                 <form id="signup-form" class="hidden space-y-4">
                     <input type="text" id="signup-name" placeholder="Full Name" class="w-full p-3 rounded-lg form-input" required>
                     <input type="text" id="signup-username" placeholder="Username" class="w-full p-3 rounded-lg form-input" required>
@@ -222,10 +214,8 @@
         </div>
     </div>
 
-    <!-- Main App View (Dashboard) -->
     <div id="dashboard-view" class="hidden w-full max-w-6xl">
         <div class="glass-card rounded-2xl p-8">
-            <!-- Dashboard Header -->
             <header class="flex flex-wrap justify-between items-center pb-6 border-b border-border-color gap-4">
                 <div>
                     <h2 class="text-3xl font-bold">Welcome, <span id="user-name"></span>!</h2>
@@ -242,23 +232,19 @@
                 </div>
             </header>
 
-            <!-- Test Selection -->
             <main class="mt-8">
                 <h3 class="text-2xl font-semibold mb-6">Choose Your Practice Test</h3>
                 <div class="grid md:grid-cols-3 gap-6" id="test-selection-grid">
-                    <!-- Test cards will be dynamically inserted here -->
-                </div>
+                    </div>
 
                 <h3 class="text-2xl font-semibold mt-12 mb-6">Premium Features</h3>
                 <div class="grid md:grid-cols-3 gap-6">
-                    <!-- AI Tutor Card -->
                     <div id="ai-tutor-card" class="relative glass-card p-6 rounded-xl flex flex-col items-center text-center hover:border-primary-accent transition-all duration-300 cursor-pointer">
                         <i class="fas fa-robot text-4xl text-primary-accent mb-4"></i>
                         <h4 class="text-xl font-semibold mb-2">AI Tutor</h4>
                         <p class="text-text-muted text-sm">Get instant help and explanations for any question from Gemini.</p>
                     </div>
-                     <!-- Other Premium Features -->
-                    <div class="relative glass-card p-6 rounded-xl flex flex-col items-center text-center disabled-feature premium-feature">
+                     <div class="relative glass-card p-6 rounded-xl flex flex-col items-center text-center disabled-feature premium-feature">
                         <i class="fas fa-chart-line text-4xl text-text-muted mb-4"></i>
                         <h4 class="text-xl font-semibold mb-2">Performance Analytics</h4>
                         <p class="text-text-muted text-sm">In-depth analysis of your strengths and weaknesses.</p>
@@ -273,65 +259,59 @@
         </div>
     </div>
     
-    <!-- Test Taking View -->
     <div id="test-view" class="hidden w-full max-w-7xl">
          <div class="glass-card rounded-2xl p-6">
-             <!-- Test Header -->
              <header class="flex flex-wrap justify-between items-center gap-4 pb-4 border-b border-border-color">
-                <div>
-                    <h2 class="text-2xl font-bold" id="test-view-title"></h2>
-                    <p class="text-text-muted text-sm" id="test-view-subtitle"></p>
-                </div>
-                <div class="flex items-center gap-4">
-                    <span class="text-text-secondary hidden md:block">Signed in as <strong id="test-view-user-name"></strong></span>
-                    <div id="test-timer-display" class="text-2xl font-mono font-bold bg-red-500/20 text-red-300 px-4 py-2 rounded-lg"></div>
-                    <button id="finish-test-btn" class="btn-secondary px-4 py-2 rounded-lg font-semibold"><i class="fas fa-flag-checkered mr-2"></i>Finish</button>
-                    <button id="back-to-dashboard-btn" class="btn-secondary px-4 py-2 rounded-lg font-semibold"><i class="fas fa-arrow-left mr-2"></i>Dashboard</button>
-                </div>
+                 <div>
+                     <h2 class="text-2xl font-bold" id="test-view-title"></h2>
+                     <p class="text-text-muted text-sm" id="test-view-subtitle"></p>
+                 </div>
+                 <div class="flex items-center gap-4">
+                     <span class="text-text-secondary hidden md:block">Signed in as <strong id="test-view-user-name"></strong></span>
+                     <div id="test-timer-display" class="text-2xl font-mono font-bold bg-red-500/20 text-red-300 px-4 py-2 rounded-lg"></div>
+                     <button id="finish-test-btn" class="btn-secondary px-4 py-2 rounded-lg font-semibold"><i class="fas fa-flag-checkered mr-2"></i>Finish</button>
+                     <button id="back-to-dashboard-btn" class="btn-secondary px-4 py-2 rounded-lg font-semibold"><i class="fas fa-arrow-left mr-2"></i>Dashboard</button>
+                 </div>
              </header>
 
-            <!-- Test Body -->
              <div class="grid lg:grid-cols-3 gap-6 mt-6">
-                <!-- Question Panel (takes 2 columns) -->
-                <div class="lg:col-span-2 bg-black/20 p-6 rounded-xl">
-                    <div class="flex justify-between items-center mb-4">
-                        <p class="font-semibold" id="question-number-display"></p>
-                        <button id="mark-review-btn" class="btn-secondary px-4 py-2 text-sm rounded-lg"><i class="far fa-flag"></i> Mark for Review</button>
-                    </div>
-                    <div id="question-passage" class="prose prose-invert max-w-none bg-black/20 p-4 rounded-lg max-h-60 overflow-y-auto mb-6 text-text-secondary"></div>
-                    <p class="text-lg leading-relaxed mb-6" id="question-text"></p>
-                    <div id="options-container" class="space-y-3"></div>
-                    <div class="flex justify-between mt-8">
-                         <button id="prev-question-btn" class="btn-primary px-6 py-2 rounded-lg font-semibold"><i class="fas fa-arrow-left mr-2"></i> Prev</button>
-                         <button id="next-question-btn" class="btn-primary px-6 py-2 rounded-lg font-semibold">Next <i class="fas fa-arrow-right ml-2"></i></button>
-                    </div>
-                </div>
+                 <div class="lg:col-span-2 bg-black/20 p-6 rounded-xl">
+                     <div class="flex justify-between items-center mb-4">
+                         <p class="font-semibold" id="question-number-display"></p>
+                         <button id="mark-review-btn" class="btn-secondary px-4 py-2 text-sm rounded-lg"><i class="far fa-flag"></i> Mark for Review</button>
+                     </div>
+                     <div id="question-passage" class="prose prose-invert max-w-none bg-black/20 p-4 rounded-lg max-h-60 overflow-y-auto mb-6 text-text-secondary"></div>
+                     <p class="text-lg leading-relaxed mb-6" id="question-text"></p>
+                     <div id="options-container" class="space-y-3"></div>
+                     <div class="flex justify-between mt-8">
+                          <button id="prev-question-btn" class="btn-primary px-6 py-2 rounded-lg font-semibold"><i class="fas fa-arrow-left mr-2"></i> Prev</button>
+                          <button id="next-question-btn" class="btn-primary px-6 py-2 rounded-lg font-semibold">Next <i class="fas fa-arrow-right ml-2"></i></button>
+                     </div>
+                 </div>
 
-                <!-- Sidebar (takes 1 column) -->
-                <div class="space-y-6">
-                    <div class="bg-black/20 p-4 rounded-xl">
-                        <h3 class="font-semibold mb-3">Question Navigator</h3>
-                        <div id="question-grid-container" class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-5 gap-2"></div>
-                    </div>
-                    <div id="desmos-card" class="bg-black/20 p-4 rounded-xl hidden">
+                 <div class="space-y-6">
+                     <div class="bg-black/20 p-4 rounded-xl">
+                         <h3 class="font-semibold mb-3">Question Navigator</h3>
+                         <div id="question-grid-container" class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-5 gap-2"></div>
+                     </div>
+                     <div id="desmos-card" class="bg-black/20 p-4 rounded-xl hidden">
                          <h3 class="font-semibold mb-3">Tools</h3>
                          <button id="open-desmos-btn" class="w-full btn-secondary py-2 rounded-lg font-semibold text-sm">
                              <i class="fas fa-calculator mr-2"></i> Open Calculator
                          </button>
-                    </div>
-                    <div id="test-ai-tutor-container" class="relative bg-black/20 p-4 rounded-xl">
+                     </div>
+                     <div id="test-ai-tutor-container" class="relative bg-black/20 p-4 rounded-xl">
                          <h3 class="font-semibold mb-2">AI Tutor</h3>
                          <p class="text-sm text-text-muted mb-3">Stuck? Ask Gemini for a hint!</p>
                          <button id="ask-ai-btn" class="w-full btn-primary py-2 rounded-lg font-semibold text-sm">
                              <i class="fas fa-robot mr-2"></i> Get a Hint
                          </button>
-                    </div>
-                </div>
+                     </div>
+                 </div>
              </div>
          </div>
     </div>
     
-    <!-- Generic Modal -->
     <div id="modal" class="fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden z-50">
         <div class="glass-card rounded-2xl p-8 w-full max-w-2xl max-h-[80vh] flex flex-col">
             <div class="flex justify-between items-center mb-4">
@@ -342,7 +322,6 @@
         </div>
     </div>
     
-    <!-- Level Selection Modal -->
     <div id="level-modal" class="fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden z-50">
         <div class="glass-card rounded-2xl p-8 w-full max-w-4xl">
             <div class="flex justify-between items-center mb-6">
@@ -350,24 +329,21 @@
                 <button id="level-modal-close-btn" class="text-2xl hover:text-red-400 transition-colors">&times;</button>
             </div>
             <div id="level-selection-grid" class="grid md:grid-cols-3 gap-6">
-                <!-- Level cards will be populated here -->
-            </div>
+                </div>
         </div>
     </div>
     
-    <!-- Desmos Modal -->
     <div id="desmos-modal" class="fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden z-50">
         <div class="glass-card rounded-2xl p-4 w-full max-w-4xl h-[80vh] flex flex-col">
              <div class="flex justify-between items-center mb-2">
-                <h2 class="text-xl font-bold">Graphing Calculator</h2>
-                <button id="desmos-close-btn" class="text-2xl hover:text-red-400 transition-colors">&times;</button>
-            </div>
-            <iframe id="desmosFrame" src="https://www.desmos.com/calculator" class="w-full h-full rounded-lg border-none"></iframe>
+                 <h2 class="text-xl font-bold">Graphing Calculator</h2>
+                 <button id="desmos-close-btn" class="text-2xl hover:text-red-400 transition-colors">&times;</button>
+             </div>
+             <iframe id="desmosFrame" src="https://www.desmos.com/calculator" class="w-full h-full rounded-lg border-none"></iframe>
         </div>
     </div>
 
 
-    <!-- Firebase SDKs -->
     <script type="module">
         // Import Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -525,8 +501,8 @@
         // --- Streak Logic ---
         async function updateUserStreak(uid, lastLoginTimestamp) {
             if (!lastLoginTimestamp) {
-                 await updateDoc(doc(db, "users", uid), { lastLogin: Timestamp.now(), streak: 1 });
-                 return;
+                await updateDoc(doc(db, "users", uid), { lastLogin: Timestamp.now(), streak: 1 });
+                return;
             }
             const lastLoginDate = lastLoginTimestamp.toDate();
             const today = new Date();
@@ -546,7 +522,7 @@
             }
 
             if (diffDays > 0) {
-                 await updateDoc(doc(db, "users", uid), {
+                await updateDoc(doc(db, "users", uid), {
                     lastLogin: Timestamp.now(),
                     streak: newStreak
                 });
@@ -566,7 +542,7 @@
         }
 
         function populateTestSelection() {
-             const grid = document.getElementById('test-selection-grid');
+            const grid = document.getElementById('test-selection-grid');
             grid.innerHTML = '';
             const tests = [
                 { id: 'SAT', name: 'SAT', icon: 'fa-pencil-alt', desc: 'Math, Reading & Writing sections.' },
@@ -712,10 +688,10 @@
 
             const passageEl = document.getElementById('question-passage');
             if (question.passage) {
-                 passageEl.textContent = question.passage;
-                 passageEl.style.display = 'block';
+                passageEl.textContent = question.passage;
+                passageEl.style.display = 'block';
             } else {
-                 passageEl.style.display = 'none';
+                passageEl.style.display = 'none';
             }
 
             document.getElementById('question-text').textContent = question.q || question.question;
@@ -777,8 +753,8 @@
         }
 
         function goToQuestion(index) {
-             currentTestState.currentQuestionIndex = index;
-             renderCurrentQuestion();
+            currentTestState.currentQuestionIndex = index;
+            renderCurrentQuestion();
         }
 
         function updateNavButtons() {
@@ -816,16 +792,16 @@
         }
         
         function updateMarkButton() {
-             const { currentSection, currentModule, currentQuestionIndex } = currentTestState;
-             const key = `${currentSection}.${currentModule}.${currentQuestionIndex}`;
-             const btn = document.getElementById('mark-review-btn');
-             if(currentTestState.marked[key]) {
+            const { currentSection, currentModule, currentQuestionIndex } = currentTestState;
+            const key = `${currentSection}.${currentModule}.${currentQuestionIndex}`;
+            const btn = document.getElementById('mark-review-btn');
+            if(currentTestState.marked[key]) {
                 btn.innerHTML = `<i class="fas fa-flag mr-2"></i> Marked`;
                 btn.classList.add('bg-yellow-500/20', 'text-yellow-300');
-             } else {
+            } else {
                 btn.innerHTML = `<i class="far fa-flag mr-2"></i> Mark for Review`;
                 btn.classList.remove('bg-yellow-500/20', 'text-yellow-300');
-             }
+            }
         }
 
         async function askAiTutor() {
@@ -906,13 +882,13 @@
 
 
         function finishTest() {
-             clearInterval(testTimerInterval);
-             let correctAnswers = 0;
-             let totalQuestions = 0;
+            clearInterval(testTimerInterval);
+            let correctAnswers = 0;
+            let totalQuestions = 0;
 
-             const { data, answers } = currentTestState;
+            const { data, answers } = currentTestState;
 
-             for(const sectionKey in answers) {
+            for(const sectionKey in answers) {
                 const [section, module] = sectionKey.split('.');
                 const sectionData = data[section][module];
                 const userAnswers = answers[sectionKey];
@@ -925,21 +901,21 @@
                         correctAnswers++;
                     }
                 }
-             }
-             
-             const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
-             const resultsHtml = `
+            }
+            
+            const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+            const resultsHtml = `
                 <h3 class="font-bold text-lg mb-2">Test Complete!</h3>
                 <p>You answered <strong class="text-primary-accent">${correctAnswers}</strong> out of <strong class="text-primary-accent">${totalQuestions}</strong> questions correctly.</p>
                 <div class="text-5xl font-bold my-6">Your Score: ${score}%</div>
                 <button id="modal-dashboard-btn" class="btn-primary px-6 py-2 rounded-lg">Back to Dashboard</button>
-             `;
-             
-             showModalMessage('Test Results', resultsHtml);
-             document.getElementById('modal-dashboard-btn').onclick = () => {
-                 document.getElementById('modal').classList.add('hidden');
-                 showView('dashboard');
-             };
+            `;
+            
+            showModalMessage('Test Results', resultsHtml);
+            document.getElementById('modal-dashboard-btn').onclick = () => {
+                document.getElementById('modal').classList.add('hidden');
+                showView('dashboard');
+            };
         }
 
         // --- Utility & Modal Logic ---
@@ -1009,16 +985,342 @@
 
             try {
                 const testData = {
-    "SAT-Basic": { "timeLimit": 134, "reading": { "module1": [ { "id": 1, "type": "mc", "q": "Passage EXCERPT: \"The city’s older neighborhoods were known for their tree-lined streets and small shops.\" Question: The phrase \"tree-lined\" most nearly means:", "options": ["with lots of trees", "lined with tree-shaped buildings", "planted along sidewalks", "dominated by tree commerce"], "correct": 0, "explanation": "'Tree-lined' describes streets with trees along them.", "difficulty": "easy" }, { "id": 2, "type": "mc", "q": "In the passage, the author uses the example of a small grocery to illustrate:", "options": ["the decline of retail", "the persistence of local businesses", "a national economic trend", "a legal regulation"], "correct": 1, "explanation": "The anecdote shows how local business persists despite trends.", "difficulty": "easy" }, { "id": 3, "type": "mc", "q": "Which choice best states the main idea of the passage excerpted above?", "options": ["Historic appearance matters more than utility", "Neighborhoods adapt to demographic changes", "Urban renewal always harms residents", "Small shops cannot survive."], "correct": 1, "explanation": "The passage focuses on adaptation to change.", "difficulty": "easy" } ], "module2": [ { "id": 1, "type": "mc", "q": "What rhetorical strategy does the author primarily use in the final paragraph to undermine an opposing claim?", "options": ["Appeal to emotion", "Use of empirical counterevidence", "Exaggeration", "Sarcasm"], "correct": 1, "explanation": "The author cites data to undermine opposition.", "difficulty": "hard" } ] }, "math": { "module1": [ { "id": 1, "type": "mc", "q": "If 3x + 7 = 19, what is x?", "options": ["2", "3", "4", "5"], "correct": 2, "explanation": "3x = 19 - 7 -> 3x = 12 -> x = 4", "difficulty": "easy" } ], "module2": [ { "id": 1, "type": "mc", "q": "If f(x)=x^2 - 4x + 3, what are the zeros of the function?", "options": ["1 and 3", "-1 and -3", "2 and -2", "3 and -3"], "correct": 0, "explanation": "Set f(x)=0 -> x^2 - 4x + 3 = 0 -> (x-1)(x-3)=0. Zeros are x=1 and x=3.", "difficulty": "hard" } ] } },
-    "SAT-Intermediate": { "timeLimit": 134, "reading": { "module1": [ { "id": 1, "type": "mc", "q": "Passage: \"The author's use of polysyndeton...\"", "options": ["The omission of conjunctions", "The repetition of conjunctions", "The use of parallel structure", "The inversion of word order"], "correct": 1, "explanation": "Polysyndeton is a rhetorical device involving the deliberate use of multiple conjunctions in close succession.", "difficulty": "hard" }, { "id": 2, "type": "mc", "q": "In analyzing the author's argument about postcolonial literature...\"", "options": ["Evidence of similar themes in pre-colonial texts", "A close reading of the author's use of metaphor", "Biographical information about the author", "Contemporary critical reviews of the work"], "correct": 0, "explanation": "Evidence of similar themes in pre-colonial texts would undermine the author's claim about the uniqueness of postcolonial literature.", "difficulty": "hard" } ], "module2": [ { "id": 1, "type": "mc", "q": "The author's critique of positivism...\"", "options": ["its overreliance on quantitative methods", "its failure to account for researcher subjectivity", "its rejection of empirical evidence", "its dependence on theoretical frameworks"], "correct": 1, "explanation": "The passage specifically critiques positivism for neglecting the role of researcher subjectivity in the construction of knowledge.", "difficulty": "hard" } ] }, "math": { "module1": [ { "id": 1, "type": "mc", "q": "If the complex number z = 3 + 4i...\"", "options": ["5", "7", "25", "49"], "correct": 2, "explanation": "First, z² = (3+4i)² = 9 + 24i + 16i² = 9 + 24i - 16 = -7 + 24i. Then |z²| = √((-7)² + 24²) = √(49 + 576) = √625 = 25.", "difficulty": "hard" } ], "module2": [ { "id": 1, "type": "mc", "q": "If the vectors u = (3, 4)...\"", "options": ["2a = 3b", "3a = 2b", "a = -2b", "a = 2b"], "correct": 2, "explanation": "u·w = 3a + 4b = 0, v·w = 2a - b = 0. From second: b=2a. Substitute in first: 3a+4(2a)=11a=0 → a=0, then b=0.", "difficulty": "hard" } ] } },
-    "SAT-Advanced": { "timeLimit": 134, "reading": { "module1": [ { "id": 1, "type": "mc", "q": "Passage: \"The author's use of polysyndeton...\"", "options": ["The omission of conjunctions", "The repetition of conjunctions", "The use of parallel structure", "The inversion of word order"], "correct": 1, "explanation": "Polysyndeton is a rhetorical device involving the deliberate use of multiple conjunctions in close succession.", "difficulty": "hard" } ], "module2": [ { "id": 1, "type": "mc", "q": "The author's critique of positivism...\"", "options": ["its overreliance on quantitative methods", "its failure to account for researcher subjectivity", "its rejection of empirical evidence", "its dependence on theoretical frameworks"], "correct": 1, "explanation": "The passage specifically critiques positivism for neglecting the role of researcher subjectivity in the construction of knowledge.", "difficulty": "hard" } ] }, "math": { "module1": [ { "id": 1, "type": "mc", "q": "If the function f is defined by f(x) = x² - 4x + 7...\"", "options": ["2", "4", "6", "8"], "correct": 1, "explanation": "First, g(2) = 2(2) - 3 = 1. Then f(g(2)) = f(1) = 1² - 4(1) + 7 = 1 - 4 + 7 = 4.", "difficulty": "hard" } ], "module2": [ { "id": 1, "type": "mc", "q": "If the function f is defined by f(x) = (x² - 1)/(x - 1)...\"", "options": ["0", "1", "2", "3"], "correct": 2, "explanation": "Simplify: (x²-1)/(x-1) = (x-1)(x+1)/(x-1) = x+1 for x≠1. So as x→1, f(x)→2. Assign f(1)=2.", "difficulty": "hard" } ] } },
-    "IELTS-Basic": { "timeLimit": 120, "listening": { "module1": [ { "id": 1, "q": "What is the main purpose of the talk?", "audio": "Welcome everyone to our university's orientation week. This session is designed to introduce you to the main campus facilities.", "options": ["To introduce course requirements", "To discuss campus facilities", "To explain grading policies", "To welcome new students"], "correct": 1 }, { "id": 2, "q": "Where is the Student Services office located?", "audio": "If you need any help with enrollment or accommodation, you can visit the Student Services office. It's on the second floor of the Administration building, right next to the finance department.", "options": ["Next to the library", "In the Student Union building", "On the second floor of the Administration building", "Beside the cafeteria"], "correct": 2 } ] }, "reading": { "module1": [ { "id": 1, "passage": "The Industrial Revolution...", "q": "When did the Industrial Revolution begin?", "opts": ["Late 17th century", "Late 18th century", "Early 19th century", "Mid 19th century"], "correct": 1 } ] }, "writing": { "module1": [ { "id": 1, "type": "task1", "prompt": "The chart below shows the percentage of the population..." }, { "id": 2, "type": "task2", "prompt": "Some people believe that it is best to accept a bad situation..." } ] } },
-    "IELTS-Intermediate": { "timeLimit": 165, "listening": { "module1": [ { "q": "What is the main purpose of the museum's new exhibition?", "opts": ["To showcase local artists", "To highlight historical artifacts", "To promote environmental awareness", "To display technological innovations"], "correct": 1, "audio": "Welcome to the City Museum..." } ] }, "reading": { "module1": [ { "id": 1, "passage": "Climate change refers to...", "q": "What is the main cause of climate change since the 1800s?", "opts": ["Natural cycles", "Human activities", "Solar radiation", "Volcanic eruptions"], "correct": 1 } ] }, "writing": { "module1": [ { "id": 1, "type": "task1", "prompt": "The table below shows..." }, { "id": 2, "type": "task2", "prompt": "Some people think that parents should teach..." } ] } },
-    "IELTS-Advanced": { "timeLimit": 165, "listening": { "module1": [ { "id": 1, "q": "What paradoxical relationship...?", "opts": ["Direct proportionality", "Inverse correlation with nuanced exceptions", "Complete independence", "Cyclical interdependence"], "correct": 1, "audio": "While examining the trajectory..." } ] }, "reading": { "module1": [ { "id": 1, "passage": "The epistemological crisis...", "q": "According to the passage, what characterizes the post-modern condition?", "opts": ["Rejection of all knowledge claims", "Incredulity toward meta-narratives", "Return to classical epistemology", "Acceptance of scientific positivism"], "correct": 1 } ] }, "writing": { "module1": [ { "id": 1, "type": "task1", "prompt": "The diagrams illustrate..." }, { "id": 2, "type": "task2", "prompt": "Some argue that artificial intelligence..." } ] } },
-    "TOEFL-Basic": { "timeLimit": 30, "reading": { "module1": [ { "passage": "The Benefits of Learning a Second Language", "q": "What is the main idea of the passage?", "options": ["The history of language learning methods", "The benefits of learning multiple languages", "The difficulty of becoming bilingual", "The best languages to learn for business"], "correct": 1, "explanation": "..." }, { "passage": "The Benefits of Learning a Second Language", "q": "According to the passage, what cognitive benefit...?", "options": ["Better physical health", "Improved memory and problem-solving skills", "Increased creativity in arts", "Better mathematical abilities"], "correct": 1, "explanation": "..." } ] } },
-    "TOEFL-Intermediate": { "timeLimit": 45, "reading": { "module1": [ { "passage": "The Cognitive Benefits of Bilingualism", "q": "What is the main purpose of the passage?", "options": ["To argue that bilingualism causes cognitive confusion", "To present recent research on cognitive advantages of bilingualism", "To compare different methods of language acquisition", "To discuss the history of bilingual education"], "correct": 1, "explanation": "..." }, { "passage": "The Cognitive Benefits of Bilingualism", "q": "The word 'confer' in paragraph 2 is closest in meaning to:", "options": ["Remove", "Grant or provide", "Complicate", "Delay"], "correct": 1, "explanation": "..." } ] } },
-    "TOEFL-Advanced": { "timeLimit": 60, "reading": { "module1": [ { "passage": "Epistemological Implications of Quantum Decoherence...", "q": "Which of the following best describes the author's primary purpose...?", "options": ["To unequivocally endorse quantum cognition models...", "To provide a balanced analysis of quantum approaches...", "To dismiss quantum cognition as pseudoscientific...", "To advocate for the immediate adoption..."], "correct": 1, "explanation": "..." }, { "passage": "Epistemological Implications of Quantum Decoherence...", "q": "The word 'engendered' in the first paragraph is closest in meaning to:", "options": ["Prevented or obstructed", "Given birth to or produced", "Simplified or reduced", "Challenged or questioned"], "correct": 1, "explanation": "..." } ] } }
-};
+                    "SAT-Basic": {
+                        "timeLimit": 65,
+                        "reading": {
+                            "module1": [{
+                                "passage": "The Sahara desert, covering most of North Africa, is the largest hot desert in the world. While it may seem barren, it is home to a variety of specially adapted plants and animals. The fennec fox, for example, has large ears that help it dissipate heat. Many plants have long roots to reach deep water sources.",
+                                "q": "What is the main idea of the passage?",
+                                "options": ["The fennec fox lives in the Sahara.", "The Sahara is a large, hot desert.", "The Sahara is too hot for any life.", "Despite its harsh climate, the Sahara supports adapted life."],
+                                "correct": 3
+                            }, {
+                                "passage": "The Sahara desert, covering most of North Africa, is the largest hot desert in the world. While it may seem barren, it is home to a variety of specially adapted plants and animals. The fennec fox, for example, has large ears that help it dissipate heat. Many plants have long roots to reach deep water sources.",
+                                "q": "The word 'barren' in the passage most nearly means:",
+                                "options": ["Productive", "Empty and lifeless", "Mountainous", "Populated"],
+                                "correct": 1
+                            }, {
+                                "passage": "The city’s older neighborhoods were known for their tree-lined streets and small, family-owned shops. These shops, from the local bakery to the corner bookstore, provided not just goods but also a sense of community. However, the arrival of large chain stores on the outskirts of the city has started to change the local economy.",
+                                "q": "According to the passage, the small shops provided more than just goods by also offering:",
+                                "options": ["Higher paying jobs", "A sense of community", "A wider variety of products", "Lower prices"],
+                                "correct": 1
+                            }, {
+                                "passage": "Bees are vital for pollination, the process that allows plants to reproduce. As bees gather nectar from flowers, pollen sticks to their bodies. They then carry this pollen to other flowers, fertilizing them. This process is essential for growing many of the fruits and vegetables we eat.",
+                                "q": "What is the main role of bees described in the passage?",
+                                "options": ["Making honey", "Building hives", "Helping plants reproduce", "Gathering nectar for food"],
+                                "correct": 2
+                            }, {
+                                "passage": "Bees are vital for pollination, the process that allows plants to reproduce. As bees gather nectar from flowers, pollen sticks to their bodies. They then carry this pollen to other flowers, fertilizing them. This process is essential for growing many of the fruits and vegetables we eat.",
+                                "q": "The word 'vital' in the passage is closest in meaning to:",
+                                "options": ["Unimportant", "Dangerous", "Essential", "Optional"],
+                                "correct": 2
+                            }]
+                        },
+                        "math": {
+                            "module1": [{
+                                "q": "If 2x + 5 = 15, what is the value of x?",
+                                "options": ["5", "10", "7.5", "20"],
+                                "correct": 0
+                            }, {
+                                "q": "A rectangular garden is 8 feet long and 6 feet wide. What is its area in square feet?",
+                                "options": ["14", "28", "48", "24"],
+                                "correct": 2
+                            }, {
+                                "q": "What is 15% of 200?",
+                                "options": ["15", "20", "30", "45"],
+                                "correct": 2
+                            }, {
+                                "q": "If a pizza is cut into 8 equal slices and you eat 3 of them, what fraction of the pizza did you eat?",
+                                "options": ["1/8", "3/8", "5/8", "1/3"],
+                                "correct": 1
+                            }, {
+                                "q": "Solve for y: 4y - 7 = 13",
+                                "options": ["3", "4", "5", "6"],
+                                "correct": 2
+                            }]
+                        }
+                    },
+                    "SAT-Intermediate": {
+                        "timeLimit": 65,
+                        "reading": {
+                            "module1": [{
+                                "passage": "The theory of plate tectonics revolutionized geology in the mid-20th century. It posits that the Earth's outer shell is divided into several plates that glide over the mantle. The movement of these plates is responsible for earthquakes, volcanic eruptions, and the formation of mountain ranges. This unifying theory provided a framework for understanding a wide range of geological phenomena that were previously disconnected.",
+                                "q": "The author's primary purpose in this passage is to:",
+                                "options": ["Argue against the theory of plate tectonics.", "Explain the revolutionary impact of plate tectonics on geology.", "Detail the specific movements of each of the Earth's plates.", "Criticize geologists for not developing the theory sooner."],
+                                "correct": 1
+                            }, {
+                                "passage": "The theory of plate tectonics revolutionized geology in the mid-20th century. It posits that the Earth's outer shell is divided into several plates that glide over the mantle. The movement of these plates is responsible for earthquakes, volcanic eruptions, and the formation of mountain ranges. This unifying theory provided a framework for understanding a wide range of geological phenomena that were previously disconnected.",
+                                "q": "The word 'posits' in the passage is closest in meaning to:",
+                                "options": ["Denies", "Questions", "Proves", "Suggests"],
+                                "correct": 3
+                            }, {
+                                "passage": "The Great Barrier Reef is a complex ecosystem that is highly sensitive to changes in water temperature. Coral bleaching, a phenomenon where corals expel the algae living in their tissues, is a direct result of warmer ocean temperatures. This process is not immediately fatal to the coral, but prolonged bleaching can lead to its death, threatening the entire reef ecosystem.",
+                                "q": "What can be inferred about the relationship between coral and algae?",
+                                "options": ["They are in a symbiotic relationship.", "The algae are a parasite to the coral.", "The coral preys on the algae.", "They compete for the same resources."],
+                                "correct": 0
+                            }, {
+                                "passage": "The Great Barrier Reef is a complex ecosystem that is highly sensitive to changes in water temperature. Coral bleaching, a phenomenon where corals expel the algae living in their tissues, is a direct result of warmer ocean temperatures. This process is not immediately fatal to the coral, but prolonged bleaching can lead to its death, threatening the entire reef ecosystem.",
+                                "q": "Which choice best describes the author's tone in the passage?",
+                                "options": ["Optimistic and hopeful", "Sarcastic and dismissive", "Informative and concerned", "Humorous and lighthearted"],
+                                "correct": 2
+                            }]
+                        },
+                        "math": {
+                            "module1": [{
+                                "q": "If f(x) = 3x² - 4x + 2, what is the value of f(-2)?",
+                                "options": ["-18", "6", "22", "18"],
+                                "correct": 2
+                            }, {
+                                "q": "In the xy-plane, the line y = 3x - 5 is parallel to the line y = mx + 2. What is the value of m?",
+                                "options": ["-1/3", "3", "-5", "2"],
+                                "correct": 1
+                            }, {
+                                "q": "A circle has an area of 36π. What is its circumference?",
+                                "options": ["6π", "12π", "18π", "36π"],
+                                "correct": 1
+                            }, {
+                                "q": "The price of a jacket was reduced by 20%. If the new price is $80, what was the original price?",
+                                "options": ["$64", "$96", "$100", "$120"],
+                                "correct": 2
+                            }, {
+                                "q": "What are the solutions to the equation x² - 5x + 6 = 0?",
+                                "options": ["x = -2, x = -3", "x = 2, x = 3", "x = -1, x = -6", "x = 1, x = 6"],
+                                "correct": 1
+                            }]
+                        }
+                    },
+                    "SAT-Advanced": {
+                        "timeLimit": 65,
+                        "reading": {
+                            "module1": [{
+                                "passage": "Literary modernism, a movement that flourished in the late 19th and early 20th centuries, was characterized by a deliberate break with traditional forms and subject matter. Influenced by thinkers like Freud and Nietzsche, modernist writers explored the inner workings of human consciousness through techniques like stream of consciousness and interior monologue. This introspective turn represented a profound shift from the external, societal focus of Victorian literature.",
+                                "q": "The passage suggests that the primary difference between modernist and Victorian literature is the former's emphasis on:",
+                                "options": ["Strict narrative structures", "Social commentary", "Individual psychology", "Moral didacticism"],
+                                "correct": 2
+                            }, {
+                                "passage": "Literary modernism, a movement that flourished in the late 19th and early 20th centuries, was characterized by a deliberate break with traditional forms and subject matter. Influenced by thinkers like Freud and Nietzsche, modernist writers explored the inner workings of human consciousness through techniques like stream of consciousness and interior monologue. This introspective turn represented a profound shift from the external, societal focus of Victorian literature.",
+                                "q": "Which of the following techniques would a modernist writer most likely use to depict a character's thoughts?",
+                                "options": ["A detailed third-person description of the character's actions.", "A direct statement from the narrator about the character's feelings.", "A fragmented and non-linear representation of the character's perceptions.", "A formal speech delivered by the character to a large audience."],
+                                "correct": 2
+                            }, {
+                                "passage": "The philosophical concept of existentialism posits that individuals are free and responsible for giving their own meaning to life. It emphasizes human agency and the idea that 'existence precedes essence,' meaning that humans are not born with a predetermined purpose. Instead, they create their purpose through their choices and actions. This stands in contrast to essentialism, which holds that objects (and people) have a set of attributes that are necessary to their identity and function.",
+                                "q": "According to the passage, an existentialist would most likely agree with which statement?",
+                                "options": ["A person's destiny is determined by fate.", "The meaning of life is a universal truth to be discovered.", "Individuals define their own purpose in life.", "Societal roles are more important than individual choices."],
+                                "correct": 2
+                            }, {
+                                "passage": "The philosophical concept of existentialism posits that individuals are free and responsible for giving their own meaning to life. It emphasizes human agency and the idea that 'existence precedes essence,' meaning that humans are not born with a predetermined purpose. Instead, they create their purpose through their choices and actions. This stands in contrast to essentialism, which holds that objects (and people) have a set of attributes that are necessary to their identity and function.",
+                                "q": "The author contrasts existentialism with essentialism to:",
+                                "options": ["Prove that essentialism is an outdated philosophy.", "Show that the two philosophies are actually identical.", "Argue that both philosophies are flawed.", "Clarify the core tenets of existentialism by showing what it is not."],
+                                "correct": 3
+                            }]
+                        },
+                        "math": {
+                            "module1": [{
+                                "q": "If i is the imaginary unit, what is the value of (3 + 2i)(4 - i)?",
+                                "options": ["10 + 5i", "12 - 2i", "14 + 5i", "12 + 5i"],
+                                "correct": 2
+                            }, {
+                                "q": "What is the sum of the solutions to the equation 2x² - 8x + 5 = 0?",
+                                "options": ["-4", "4", "-2.5", "2.5"],
+                                "correct": 1
+                            }, {
+                                "q": "If sin(x) = 0.6 and x is in Quadrant II, what is the value of cos(x)?",
+                                "options": ["0.8", "-0.8", "0.4", "-0.4"],
+                                "correct": 1
+                            }, {
+                                "q": "A function is defined by h(t) = at² + bt. If h(1) = 5 and h(2) = 14, what is the value of h(3)?",
+                                "options": ["19", "23", "27", "31"],
+                                "correct": 2
+                            }, {
+                                "q": "The equation of a circle in the xy-plane is x² + y² - 6x + 8y + 9 = 0. What is the radius of the circle?",
+                                "options": ["3", "4", "5", "9"],
+                                "correct": 1
+                            }]
+                        }
+                    },
+                    "IELTS-Basic": {
+                        "timeLimit": 40,
+                        "reading": {
+                            "module1": [{
+                                "passage": "Public libraries are essential community hubs. They provide free access to books, computers, and other resources. Many libraries also offer workshops on topics like job searching and learning new computer skills. For children, libraries often have story time sessions and summer reading programs to encourage literacy from a young age.",
+                                "q": "According to the passage, which of these is NOT a service provided by public libraries?",
+                                "opts": ["Free internet access", "Job placement services", "Children's reading programs", "Workshops for new skills"],
+                                "correct": 1
+                            }, {
+                                "passage": "Public libraries are essential community hubs. They provide free access to books, computers, and other resources. Many libraries also offer workshops on topics like job searching and learning new computer skills. For children, libraries often have story time sessions and summer reading programs to encourage literacy from a young age.",
+                                "q": "The main purpose of summer reading programs is to:",
+                                "opts": ["Provide childcare", "Encourage children to read", "Help adults find jobs", "Teach computer skills"],
+                                "correct": 1
+                            }, {
+                                "passage": "The water cycle describes how water moves on, above, and below the surface of the Earth. The main stages are evaporation, condensation, and precipitation. Evaporation is when the sun heats water in rivers or lakes and it turns into vapor. This vapor rises, cools, and turns into liquid, forming clouds. This is condensation. When too much water has condensed, it falls back to Earth as rain, which is precipitation.",
+                                "q": "What happens during the condensation stage?",
+                                "opts": ["Water falls as rain.", "The sun heats the water.", "Water vapor cools and forms clouds.", "Water flows into rivers."],
+                                "correct": 2
+                            }, {
+                                "passage": "The water cycle describes how water moves on, above, and below the surface of the Earth. The main stages are evaporation, condensation, and precipitation. Evaporation is when the sun heats water in rivers or lakes and it turns into vapor. This vapor rises, cools, and turns into liquid, forming clouds. This is condensation. When too much water has condensed, it falls back to Earth as rain, which is precipitation.",
+                                "q": "What is the final stage described in the passage?",
+                                "opts": ["Evaporation", "Condensation", "Precipitation", "Collection"],
+                                "correct": 2
+                            }]
+                        },
+                        "writing": {
+                            "module1": [{
+                                "type": "task1",
+                                "prompt": "The chart below shows the number of men and women in a company in 2010. Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
+                            }, {
+                                "type": "task2",
+                                "prompt": "Many people prefer to live in a city, while others think the countryside is a better place to live. Discuss both views and give your own opinion."
+                            }]
+                        }
+                    },
+                    "IELTS-Intermediate": {
+                        "timeLimit": 60,
+                        "reading": {
+                            "module1": [{
+                                "passage": "The phenomenon of urbanization has accelerated dramatically over the past century. While cities offer numerous opportunities for employment and education, this rapid growth also presents significant challenges. These include strained infrastructure, such as public transport and sanitation systems, as well as issues with affordable housing and increased pollution. Urban planning is therefore crucial to mitigate these negative effects and create sustainable urban environments.",
+                                "q": "Which of the following is presented as a consequence of rapid urbanization?",
+                                "opts": ["Decreased employment", "Improved public transport", "A lack of affordable housing", "Reduced pollution levels"],
+                                "correct": 2
+                            }, {
+                                "passage": "The phenomenon of urbanization has accelerated dramatically over the past century. While cities offer numerous opportunities for employment and education, this rapid growth also presents significant challenges. These include strained infrastructure, such as public transport and sanitation systems, as well as issues with affordable housing and increased pollution. Urban planning is therefore crucial to mitigate these negative effects and create sustainable urban environments.",
+                                "q": "The author suggests that urban planning is important for:",
+                                "opts": ["Encouraging more people to move to cities", "Limiting access to education", "Managing the problems associated with urban growth", "Eliminating the need for public transport"],
+                                "correct": 2
+                            }, {
+                                "passage": "Renewable energy sources, such as solar and wind power, are increasingly viewed as viable alternatives to fossil fuels. Their primary advantage is their minimal environmental impact, as they do not produce greenhouse gases that contribute to climate change. However, their adoption faces obstacles. For instance, solar and wind power are intermittent—they are not available 24/7. This necessitates the development of large-scale energy storage solutions to ensure a consistent power supply.",
+                                "q": "What is the main challenge associated with solar and wind power mentioned in the text?",
+                                "opts": ["They are more expensive than fossil fuels.", "They are not consistently available.", "They produce greenhouse gases.", "They are difficult to install."],
+                                "correct": 1
+                            }, {
+                                "passage": "Renewable energy sources, such as solar and wind power, are increasingly viewed as viable alternatives to fossil fuels. Their primary advantage is their minimal environmental impact, as they do not produce greenhouse gases that contribute to climate change. However, their adoption faces obstacles. For instance, solar and wind power are intermittent—they are not available 24/7. This necessitates the development of large-scale energy storage solutions to ensure a consistent power supply.",
+                                "q": "What solution is proposed to deal with the primary challenge?",
+                                "opts": ["Using more fossil fuels.", "Developing better energy storage.", "Building more solar panels.", "Reducing energy consumption."],
+                                "correct": 1
+                            }]
+                        },
+                        "writing": {
+                            "module1": [{
+                                "type": "task1",
+                                "prompt": "The two pie charts below show the percentage of online sales for different retail sectors in Canada in 2015 and 2020. Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
+                            }, {
+                                "type": "task2",
+                                "prompt": "Some people believe that governments should spend more money on public services, rather than on arts such as music and painting. To what extent do you agree or disagree?"
+                            }]
+                        }
+                    },
+                    "IELTS-Advanced": {
+                        "timeLimit": 60,
+                        "reading": {
+                            "module1": [{
+                                "passage": "The concept of 'neuroplasticity' fundamentally challenges the long-held belief that the adult brain is a static, unchanging organ. Research has demonstrated that the brain possesses a remarkable ability to reorganize itself by forming new neural connections throughout life. This adaptability allows the brain to compensate for injury and disease and to adjust its activities in response to new situations or changes in its environment. This principle underlies the therapeutic potential of cognitive-behavioral therapy and targeted rehabilitation after a stroke.",
+                                "q": "What is the main idea of the passage?",
+                                "opts": ["The adult brain is static and unchangeable.", "Neuroplasticity is a rare condition found in some individuals.", "The brain's ability to adapt and change has significant therapeutic implications.", "Cognitive-behavioral therapy is ineffective for brain injuries."],
+                                "correct": 2
+                            }, {
+                                "passage": "The concept of 'neuroplasticity' fundamentally challenges the long-held belief that the adult brain is a static, unchanging organ. Research has demonstrated that the brain possesses a remarkable ability to reorganize itself by forming new neural connections throughout life. This adaptability allows the brain to compensate for injury and disease and to adjust its activities in response to new situations or changes in its environment. This principle underlies the therapeutic potential of cognitive-behavioral therapy and targeted rehabilitation after a stroke.",
+                                "q": "The passage implies that neuroplasticity is a process that:",
+                                "opts": ["Only occurs in childhood.", "Is a direct cause of brain disease.", "Ceases after an injury.", "Continues throughout a person's life."],
+                                "correct": 3
+                            }, {
+                                "passage": "The Sapir-Whorf hypothesis posits a controversial relationship between the language an individual speaks and their perception of the world. The stronger version, linguistic determinism, claims that language dictates thought and that linguistic categories limit and determine cognitive categories. The weaker version, linguistic relativity, argues only that language influences thought, making it easier to conceive of certain ideas. While the strong version has been largely discredited, the principle of linguistic relativity continues to be a subject of empirical research and debate in linguistics and cognitive science.",
+                                "q": "What is the main difference between linguistic determinism and linguistic relativity?",
+                                "opts": ["Determinism claims language dictates thought, while relativity claims it only influences thought.", "Determinism is widely accepted, while relativity has been discredited.", "Determinism applies to written language, while relativity applies to spoken language.", "Determinism is a new theory, while relativity is an old one."],
+                                "correct": 0
+                            }, {
+                                "passage": "The Sapir-Whorf hypothesis posits a controversial relationship between the language an individual speaks and their perception of the world. The stronger version, linguistic determinism, claims that language dictates thought and that linguistic categories limit and determine cognitive categories. The weaker version, linguistic relativity, argues only that language influences thought, making it easier to conceive of certain ideas. While the strong version has been largely discredited, the principle of linguistic relativity continues to be a subject of empirical research and debate in linguistics and cognitive science.",
+                                "q": "The author's attitude toward the strong version of the Sapir-Whorf hypothesis can be best described as:",
+                                "opts": ["Supportive", "Neutral", "Enthusiastic", "Skeptical"],
+                                "correct": 3
+                            }]
+                        },
+                        "writing": {
+                            "module1": [{
+                                "type": "task1",
+                                "prompt": "The diagram illustrates the process of how coffee is produced, from picking the beans to packaging for sale in shops. Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
+                            }, {
+                                "type": "task2",
+                                "prompt": "In some countries, a few people earn extremely high salaries. Some people think that this is good for a country, while others believe that governments should control salaries and limit the amount people can earn. Discuss both views and give your own opinion."
+                            }]
+                        }
+                    },
+                    "TOEFL-Basic": {
+                        "timeLimit": 20,
+                        "reading": {
+                            "module1": [{
+                                "passage": "Photosynthesis is the process used by plants to convert light energy into chemical energy. This process is crucial for life on Earth as it produces most of the planet's oxygen. The main ingredients for photosynthesis are sunlight, water, and carbon dioxide. The plant's leaves contain chlorophyll, a green pigment that absorbs sunlight.",
+                                "q": "What is the main purpose of photosynthesis?",
+                                "options": ["To absorb water from the soil.", "To release carbon dioxide into the air.", "To convert light into chemical energy.", "To give leaves their green color."],
+                                "correct": 2
+                            }, {
+                                "passage": "Photosynthesis is the process used by plants to convert light energy into chemical energy. This process is crucial for life on Earth as it produces most of the planet's oxygen. The main ingredients for photosynthesis are sunlight, water, and carbon dioxide. The plant's leaves contain chlorophyll, a green pigment that absorbs sunlight.",
+                                "q": "According to the passage, what role does chlorophyll play?",
+                                "options": ["It absorbs sunlight.", "It produces water.", "It releases oxygen.", "It captures carbon dioxide."],
+                                "correct": 0
+                            }, {
+                                "passage": "The moon is Earth's only natural satellite. It is much smaller than the Earth and has no atmosphere. This means there is no weather, no wind, and the sky always appears black. The surface is covered with craters, which were formed by asteroids and comets hitting the moon over billions of years.",
+                                "q": "Why does the moon's sky always look black?",
+                                "options": ["Because it is far from the sun.", "Because it has no atmosphere.", "Because it is covered in dark dust.", "Because it does not rotate."],
+                                "correct": 1
+                            }, {
+                                "passage": "The moon is Earth's only natural satellite. It is much smaller than the Earth and has no atmosphere. This means there is no weather, no wind, and the sky always appears black. The surface is covered with craters, which were formed by asteroids and comets hitting the moon over billions of years.",
+                                "q": "What caused the craters on the moon's surface?",
+                                "options": ["Volcanic eruptions", "Erosion by wind and water", "Impacts from asteroids and comets", "Movement of lunar plates."],
+                                "correct": 2
+                            }]
+                        }
+                    },
+                    "TOEFL-Intermediate": {
+                        "timeLimit": 20,
+                        "reading": {
+                            "module1": [{
+                                "passage": "Echolocation is a biological sonar used by several animal species, most notably bats and dolphins. These animals emit calls out to the environment and listen to the echoes of those calls that return from various objects near them. They use these echoes to locate and identify the objects. Echolocation is used for navigation, foraging, and hunting in various environments, especially in conditions of low visibility.",
+                                "q": "What is the primary function of the echoes in echolocation?",
+                                "options": ["To scare away predators.", "To communicate with other animals.", "To create light in dark environments.", "To provide information about the surroundings."],
+                                "correct": 3
+                            }, {
+                                "passage": "Echolocation is a biological sonar used by several animal species, most notably bats and dolphins. These animals emit calls out to the environment and listen to the echoes of those calls that return from various objects near them. They use these echoes to locate and identify the objects. Echolocation is used for navigation, foraging, and hunting in various environments, especially in conditions of low visibility.",
+                                "q": "The word 'emit' in the passage is closest in meaning to:",
+                                "options": ["Absorb", "Receive", "Send out", "Silence"],
+                                "correct": 2
+                            }, {
+                                "passage": "The printing press, invented by Johannes Gutenberg around 1440, was a landmark invention that profoundly altered the course of human history. Before its invention, books were handwritten and prohibitively expensive, making them accessible only to a small, wealthy elite. The printing press allowed for the mass production of books, drastically lowering their cost and making knowledge and ideas accessible to a much wider audience. This democratization of information fueled the Renaissance, the Reformation, and the Age of Enlightenment.",
+                                "q": "What was the main consequence of the invention of the printing press?",
+                                "options": ["It made books more expensive.", "It limited the spread of new ideas.", "It made information more widely available.", "It was only used by the wealthy elite."],
+                                "correct": 2
+                            }, {
+                                "passage": "The printing press, invented by Johannes Gutenberg around 1440, was a landmark invention that profoundly altered the course of human history. Before its invention, books were handwritten and prohibitively expensive, making them accessible only to a small, wealthy elite. The printing press allowed for the mass production of books, drastically lowering their cost and making knowledge and ideas accessible to a much wider audience. This democratization of information fueled the Renaissance, the Reformation, and the Age of Enlightenment.",
+                                "q": "The word 'profoundly' in the passage is closest in meaning to:",
+                                "options": ["Slightly", "Negatively", "Significantly", "Temporarily"],
+                                "correct": 2
+                            }]
+                        }
+                    },
+                    "TOEFL-Advanced": {
+                        "timeLimit": 20,
+                        "reading": {
+                            "module1": [{
+                                "passage": "The Cambrian explosion, which occurred approximately 541 million years ago, was a period of rapid evolutionary diversification, during which most major animal phyla started appearing in the fossil record. The relatively short timeframe of this event has been a source of intense scientific debate. While some theories attribute this diversification to environmental changes, such as a rise in atmospheric oxygen, others point to genetic or developmental innovations, such as the evolution of Hox genes, which control body plan development.",
+                                "q": "The passage is primarily concerned with:",
+                                "options": ["Criticizing the fossil record of the Cambrian period.", "Discussing the various theories explaining the Cambrian explosion.", "Establishing a definitive timeline for the evolution of Hox genes.", "Arguing that environmental changes were the sole cause of diversification."],
+                                "correct": 1
+                            }, {
+                                "passage": "The Cambrian explosion, which occurred approximately 541 million years ago, was a period of rapid evolutionary diversification, during which most major animal phyla started appearing in the fossil record. The relatively short timeframe of this event has been a source of intense scientific debate. While some theories attribute this diversification to environmental changes, such as a rise in atmospheric oxygen, others point to genetic or developmental innovations, such as the evolution of Hox genes, which control body plan development.",
+                                "q": "According to the passage, what is a key point of debate regarding the Cambrian explosion?",
+                                "options": ["Whether it occurred on land or in the sea.", "The exact number of species that evolved.", "The cause of the rapid diversification.", "Why it did not happen sooner."],
+                                "correct": 2
+                            }, {
+                                "passage": "In economics, the principle of comparative advantage suggests that countries can gain from trade if they specialize in producing the goods in which they have a lower opportunity cost. This is distinct from absolute advantage, which refers to being able to produce a good using fewer inputs. A country can have an absolute advantage in producing all goods, but it will still benefit from trading with another country that has a comparative advantage in a particular good. This specialization increases total global production and allows both trading partners to consume more than they could in isolation.",
+                                "q": "Which of the following is the best example of a country having a comparative advantage?",
+                                "options": ["A country that can produce more of all goods than any other country.", "A country that can produce a specific good at a lower opportunity cost than its trading partners.", "A country that refuses to trade with other nations to protect its own industries.", "A country that can produce a specific good using the fewest resources."],
+                                "correct": 1
+                            }, {
+                                "passage": "In economics, the principle of comparative advantage suggests that countries can gain from trade if they specialize in producing the goods in which they have a lower opportunity cost. This is distinct from absolute advantage, which refers to being able to produce a good using fewer inputs. A country can have an absolute advantage in producing all goods, but it will still benefit from trading with another country that has a comparative advantage in a particular good. This specialization increases total global production and allows both trading partners to consume more than they could in isolation.",
+                                "q": "The author mentions 'absolute advantage' in order to:",
+                                "options": ["Suggest it is more important than comparative advantage.", "Argue that it is the main driver of international trade.", "Provide a counterexample to the theory of trade.", "Distinguish it from the central concept of comparative advantage."],
+                                "correct": 3
+                            }]
+                        }
+                    }
+                };
                 
                 const batch = writeBatch(db);
                 for (const testId in testData) {
@@ -1029,7 +1331,7 @@
                 
                 setupStatus.textContent = 'Database initialized successfully!';
                 setupStatus.classList.remove('text-yellow-400');
-                setupStatus.classList.add('text-green-400');
+                setupStatus.classList.add('green-400');
 
             } catch (error) {
                 console.error("Database setup error:", error);
@@ -1042,4 +1344,3 @@
     </script>
 </body>
 </html>
-
