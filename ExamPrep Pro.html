@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExamPrep Pro | Login</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Styles for a modern, sleek look */
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --card-bg: rgba(30, 41, 59, 0.5);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary-accent: #3b82f6;
+            --secondary-accent: #10b981;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 20px 20px;
+            color: var(--text-primary);
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-accent), #60a5fa);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .form-input {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-accent);
+            background-color: rgba(255, 255, 255, 0.1);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+
+        .premium-feature::after {
+            content: 'PREMIUM';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 99px;
+            letter-spacing: 0.5px;
+        }
+
+        .disabled-feature {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #desmosFrame {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        .option {
+            transition: all 0.2s ease;
+        }
+        .option.selected {
+            border-color: var(--primary-accent);
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .grid-item.current { background-color: var(--primary-accent); border-color: var(--primary-accent); color: white; }
+        .grid-item.answered { background-color: var(--secondary-accent); border-color: var(--secondary-accent); color: white; }
+        .grid-item.marked { background-color: #f59e0b; border-color: #f59e0b; color: white; }
+
+        .loader {
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--primary-accent);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Prose styles for modal content */
+        .prose { color: var(--text-secondary); }
+        .prose h1, .prose h2, .prose h3, .prose h4 { color: var(--text-primary); }
+        .prose strong { color: var(--text-primary); }
+        .prose a { color: var(--primary-accent); }
+        .prose code { background-color: var(--bg-secondary); padding: 2px 4px; border-radius: 4px; }
+
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+<!-- Loading Spinner (initially visible) -->
+<div id="loading-view" class="flex flex-col items-center gap-4">
+    <div class="loader"></div>
+    <p class="text-lg text-text-secondary">Initializing ExamPrep Pro...</p>
+</div>
+
+<!-- Onboarding / Main Portal View -->
+<div id="portal-view" class="hidden w-full max-w-5xl">
+    <div class="glass-card rounded-2xl p-8">
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-extrabold bg-gradient-to-r from-blue-400 to-emerald-400 text-transparent bg-clip-text">ExamPrep Pro</h1>
+            <p class="text-text-muted mt-3 text-lg">Intelligent Test Preparation Platform</p>
+        </header>
+        <div id="onboarding-container">
+            <!-- Onboarding steps will be injected here from the `tsion.html` logic -->
+        </div>
+    </div>
+</div>
+
+
+<!-- Auth View (Login/Sign-up) -->
+<div id="auth-view" class="hidden w-full max-w-md">
+    <div class="glass-card rounded-2xl p-8">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 text-transparent bg-clip-text">ExamPrep Pro</h1>
+            <p class="text-text-muted mt-2">Your AI-Powered Study Partner</p>
+        </div>
+
+        <!-- Auth Forms Container -->
+        <div id="auth-forms">
+            <!-- Login Form -->
+            <form id="login-form" class="space-y-4">
+                <input type="text" id="login-identifier" placeholder="Username or Email" class="w-full p-3 rounded-lg form-input" required>
+                <input type="password" id="login-password" placeholder="Password" class="w-full p-3 rounded-lg form-input" required>
+                <button type="submit" class="w-full py-3 rounded-lg text-white font-semibold btn-primary">Log In</button>
+                <p class="text-sm text-center text-text-muted">Don't have an account? <a href="#" id="show-signup" class="font-semibold text-primary-accent hover:underline">Sign Up</a></p>
+            </form>
+
+            <!-- Sign-up Form -->
+            <form id="signup-form" class="hidden space-y-4">
+                <input type="text" id="signup-name" placeholder="Full Name" class="w-full p-3 rounded-lg form-input" required>
+                <input type="text" id="signup-username" placeholder="Username" class="w-full p-3 rounded-lg form-input" required>
+                <input type="email" id="signup-email" placeholder="Email" class="w-full p-3 rounded-lg form-input" required>
+                <input type="password" id="signup-password" placeholder="Password" class="w-full p-3 rounded-lg form-input" required>
+                <button type="submit" class="w-full py-3 rounded-lg text-white font-semibold btn-primary">Create Account</button>
+                <p class="text-sm text-center text-text-muted">Already have an account? <a href="#" id="show-login" class="font-semibold text-primary-accent hover:underline">Log In</a></p>
+            </form>
+            <p id="auth-error" class="text-red-400 text-sm text-center mt-4"></p>
+        </div>
+        <div class="text-center text-xs text-text-muted mt-6">
+            <a href="#" class="hover:underline" onclick="showPrivacyPolicy()">Privacy Policy</a> &bull; <a href="#" class="hover:underline" onclick="showPrivacyPolicy()">Terms of Service</a>
+        </div>
+    </div>
+</div>
+
+<!-- Main App View (Dashboard) -->
+<div id="dashboard-view" class="hidden w-full max-w-6xl">
+    <div class="glass-card rounded-2xl p-8">
+        <!-- Dashboard Header -->
+        <header class="flex flex-wrap justify-between items-center pb-6 border-b border-border-color">
+            <div>
+                <h2 class="text-3xl font-bold">Welcome, <span id="user-name"></span>!</h2>
+                <p class="text-text-muted">Let's get you ready for your exam.</p>
+            </div>
+            <div class="flex items-center gap-6 mt-4 md:mt-0">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-yellow-400 flex items-center gap-2"><i class="fas fa-fire"></i> <span id="streak-count">0</span></div>
+                    <div class="text-xs text-text-muted">Day Streak</div>
+                </div>
+                <div id="user-tier-badge" class="px-4 py-1 rounded-full font-semibold text-sm"></div>
+                <button id="logout-button" class="btn-secondary px-4 py-2 rounded-lg font-semibold"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button>
+            </div>
+        </header>
+
+        <!-- Test Selection -->
+        <main class="mt-8">
+            <h3 class="text-2xl font-semibold mb-6">Choose Your Practice Test</h3>
+            <div class="grid md:grid-cols-3 gap-6" id="test-selection-grid">
+                <!-- Test cards will be dynamically inserted here -->
+            </div>
+
+            <h3 class="text-2xl font-semibold mt-12 mb-6">Premium Features</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- AI Tutor Card -->
+                <div id="ai-tutor-card" class="relative glass-card p-6 rounded-xl flex flex-col items-center text-center hover:border-primary-accent transition-all duration-300 cursor-pointer">
+                    <i class="fas fa-robot text-4xl text-primary-accent mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2">AI Tutor</h4>
+                    <p class="text-text-muted text-sm">Get instant help and explanations for any question from Gemini.</p>
+                </div>
+                <!-- Other Premium Features -->
+                <div class="relative glass-card p-6 rounded-xl flex flex-col items-center text-center disabled-feature premium-feature">
+                    <i class="fas fa-chart-line text-4xl text-text-muted mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2">Performance Analytics</h4>
+                    <p class="text-text-muted text-sm">In-depth analysis of your strengths and weaknesses.</p>
+                </div>
+                <div class="relative glass-card p-6 rounded-xl flex flex-col items-center text-center disabled-feature premium-feature">
+                    <i class="fas fa-tasks text-4xl text-text-muted mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2">Personalized Study Plan</h4>
+                    <p class="text-text-muted text-sm">An AI-generated plan tailored to your progress.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Test Taking View -->
+<div id="test-view" class="hidden w-full max-w-7xl">
+    <div class="glass-card rounded-2xl p-6">
+        <!-- Test Header -->
+        <header class="flex flex-wrap justify-between items-center gap-4 pb-4 border-b border-border-color">
+            <div>
+                <h2 class="text-2xl font-bold" id="test-view-title"></h2>
+                <p class="text-text-muted text-sm" id="test-view-subtitle"></p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div id="test-timer-display" class="text-2xl font-mono font-bold bg-red-500/20 text-red-300 px-4 py-2 rounded-lg"></div>
+                <button id="finish-test-btn" class="btn-secondary px-4 py-2 rounded-lg font-semibold"><i class="fas fa-flag-checkered mr-2"></i>Finish Test</button>
+                <button id="back-to-dashboard-btn" class="btn-secondary px-4 py-2 rounded-lg font-semibold"><i class="fas fa-arrow-left mr-2"></i>Dashboard</button>
+            </div>
+        </header>
+
+        <!-- Test Body -->
+        <div class="grid lg:grid-cols-3 gap-6 mt-6">
+            <!-- Question Panel (takes 2 columns) -->
+            <div class="lg:col-span-2 bg-bg-primary/50 p-6 rounded-xl">
+                <div class="flex justify-between items-center mb-4">
+                    <p class="font-semibold" id="question-number-display"></p>
+                    <button id="mark-review-btn" class="btn-secondary px-4 py-2 text-sm rounded-lg"><i class="far fa-flag"></i> Mark for Review</button>
+                </div>
+                <div id="question-passage" class="prose prose-invert max-w-none bg-black/20 p-4 rounded-lg max-h-60 overflow-y-auto mb-6 text-text-secondary"></div>
+                <p class="text-lg leading-relaxed mb-6" id="question-text"></p>
+                <div id="options-container" class="space-y-3"></div>
+                <div class="flex justify-between mt-8">
+                    <button id="prev-question-btn" class="btn-primary px-6 py-2 rounded-lg font-semibold"><i class="fas fa-arrow-left mr-2"></i> Prev</button>
+                    <button id="next-question-btn" class="btn-primary px-6 py-2 rounded-lg font-semibold">Next <i class="fas fa-arrow-right ml-2"></i></button>
+                </div>
+            </div>
+
+            <!-- Sidebar (takes 1 column) -->
+            <div class="space-y-6">
+                <div class="bg-bg-primary/50 p-4 rounded-xl">
+                    <h3 class="font-semibold mb-3">Question Navigator</h3>
+                    <div id="question-grid-container" class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-5 gap-2"></div>
+                </div>
+                <div id="desmos-container" class="bg-bg-primary/50 p-4 rounded-xl hidden">
+                    <h3 class="font-semibold mb-3">Graphing Calculator</h3>
+                    <iframe id="desmosFrame" src="https://www.desmos.com/calculator" width="100%" height="300"></iframe>
+                </div>
+                <div id="test-ai-tutor-container" class="relative bg-bg-primary/50 p-4 rounded-xl">
+                    <h3 class="font-semibold mb-2">AI Tutor</h3>
+                    <p class="text-sm text-text-muted mb-3">Stuck? Ask Gemini for a hint!</p>
+                    <button id="ask-ai-btn" class="w-full btn-primary py-2 rounded-lg font-semibold text-sm">
+                        <i class="fas fa-robot mr-2"></i> Get a Hint
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Generic Modal -->
+<div id="modal" class="fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden z-50">
+    <div class="glass-card rounded-2xl p-8 w-full max-w-2xl max-h-[80vh] flex flex-col">
+        <div class="flex justify-between items-center mb-4">
+            <h2 id="modal-title" class="text-2xl font-bold"></h2>
+            <button id="modal-close-btn" class="text-2xl hover:text-red-400 transition-colors">&times;</button>
+        </div>
+        <div id="modal-content" class="overflow-y-auto text-text-secondary prose prose-invert max-w-none"></div>
+    </div>
+</div>
+
+<!-- Level Selection Modal -->
+<div id="level-modal" class="fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden z-50">
+    <div class="glass-card rounded-2xl p-8 w-full max-w-4xl">
+        <div class="flex justify-between items-center mb-6">
+            <h2 id="level-modal-title" class="text-3xl font-bold">Select Level</h2>
+            <button id="level-modal-close-btn" class="text-2xl hover:text-red-400 transition-colors">&times;</button>
+        </div>
+        <div id="level-selection-grid" class="grid md:grid-cols-3 gap-6">
+            <!-- Level cards will be populated here -->
+        </div>
+    </div>
+</div>
+
+
+<!-- Firebase SDKs -->
+<script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        signOut,
+        onAuthStateChanged,
+        updateProfile
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import {
+        getFirestore,
+        doc,
+        setDoc,
+        getDoc,
+        collection,
+        query,
+        where,
+        getDocs,
+        updateDoc,
+        Timestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // Firebase configuration (REPLACE WITH YOURS)
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // --- App State ---
+    let currentUser = null;
+    let currentTestState = {};
+    let testTimerInterval = null;
+
+    // --- UI Elements ---
+    const views = {
+        loading: document.getElementById('loading-view'),
+        auth: document.getElementById('auth-view'),
+        portal: document.getElementById('portal-view'),
+        dashboard: document.getElementById('dashboard-view'),
+        test: document.getElementById('test-view')
+    };
+
+    // --- View Management ---
+    function showView(viewName) {
+        Object.values(views).forEach(view => view.classList.add('hidden'));
+        const viewToShow = views[viewName];
+        if (viewToShow) {
+            viewToShow.classList.remove('hidden');
+            // Use flex for centering, but allow portal to be non-flex if it's the main container
+            if (viewName !== 'portal') {
+                viewToShow.classList.add('flex', 'items-center', 'justify-center');
+            }
+        }
+    }
+
+    // --- Auth State Change Listener ---
+    onAuthStateChanged(auth, async (user) => {
+        views.loading.classList.remove('hidden');
+        if (user) {
+            const userDocRef = doc(db, "users", user.uid);
+            const userDoc = await getDoc(userDocRef);
+            if (userDoc.exists()) {
+                currentUser = { uid: user.uid, ...userDoc.data() };
+                // If user hasn't completed onboarding, show portal
+                if (!currentUser.onboardingComplete) {
+                    setupOnboarding();
+                    showView('portal');
+                } else {
+                    await updateUserStreak(user.uid, currentUser.lastLogin);
+                    // Refetch user data after streak update
+                    const updatedUserDoc = await getDoc(userDocRef);
+                    currentUser = { uid: user.uid, ...updatedUserDoc.data() };
+                    await setupDashboard();
+                    showView('dashboard');
+                }
+            } else {
+                console.error("User document not found! Forcing logout.");
+                signOut(auth);
+            }
+        } else {
+            currentUser = null;
+            showView('auth');
+        }
+        views.loading.classList.add('hidden');
+    });
+
+    // --- Authentication Logic ---
+    document.getElementById('show-signup').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('login-form').classList.add('hidden'); document.getElementById('signup-form').classList.remove('hidden'); });
+    document.getElementById('show-login').addEventListener('click', (e) => { e.preventDefault(); document.getElementById('signup-form').classList.add('hidden'); document.getElementById('login-form').classList.remove('hidden'); });
+
+    const authError = document.getElementById('auth-error');
+
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        authError.textContent = '';
+        const name = document.getElementById('signup-name').value;
+        const username = document.getElementById('signup-username').value.toLowerCase();
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+
+        try {
+            // Check if username is unique
+            const usernameQuery = query(collection(db, "users"), where("username", "==", username));
+            const usernameSnapshot = await getDocs(usernameQuery);
+            if (!usernameSnapshot.empty) {
+                throw new Error("Username already exists.");
+            }
+
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            await updateProfile(user, { displayName: name });
+
+            await setDoc(doc(db, "users", user.uid), {
+                displayName: name,
+                username: username,
+                email: email,
+                tier: 'free', // Default tier
+                streak: 0,
+                lastLogin: Timestamp.now(),
+                createdAt: Timestamp.now(),
+                onboardingComplete: false
+            });
+
+        } catch (error) {
+            console.error("Signup error:", error);
+            authError.textContent = error.message;
+        }
+    });
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        authError.textContent = '';
+        let identifier = document.getElementById('login-identifier').value;
+        const password = document.getElementById('login-password').value;
+        let email = identifier;
+
+        try {
+            // Check if identifier is a username
+            if (!identifier.includes('@')) {
+                const usernameQuery = query(collection(db, "users"), where("username", "==", identifier.toLowerCase()));
+                const usernameSnapshot = await getDocs(usernameQuery);
+                if (usernameSnapshot.empty) {
+                    throw new Error("Invalid username or email.");
+                }
+                email = usernameSnapshot.docs[0].data().email;
+            }
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+            console.error("Login error:", error);
+            authError.textContent = "Invalid credentials. Please try again.";
+        }
+    });
+
+
+    // --- Streak Logic ---
+    async function updateUserStreak(uid, lastLoginTimestamp) {
+        if (!lastLoginTimestamp) { // First login after streak implementation
+            await updateDoc(doc(db, "users", uid), { lastLogin: Timestamp.now(), streak: 1 });
+            return;
+        }
+        const lastLoginDate = lastLoginTimestamp.toDate();
+        const today = new Date();
+
+        const lastLogin = new Date(lastLoginDate.getFullYear(), lastLoginDate.getMonth(), lastLoginDate.getDate());
+        const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+        const diffTime = currentDate - lastLogin;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        let newStreak = currentUser.streak || 0;
+
+        if (diffDays === 1) {
+            newStreak++;
+        } else if (diffDays > 1) {
+            newStreak = 1; // Reset streak
+        }
+        // If diffDays is 0, do nothing (already logged in today)
+
+        if (diffDays > 0) {
+            await updateDoc(doc(db, "users", uid), {
+                lastLogin: Timestamp.now(),
+                streak: newStreak
+            });
+        }
+    }
+
+    // --- Dashboard Logic ---
+    async function setupDashboard() {
+        document.getElementById('user-name').textContent = currentUser.displayName || 'User';
+        document.getElementById('streak-count').textContent = currentUser.streak || 0;
+        const tierBadge = document.getElementById('user-tier-badge');
+        tierBadge.textContent = currentUser.tier.toUpperCase();
+        tierBadge.className = `px-4 py-1 rounded-full font-semibold text-sm ${currentUser.tier === 'premium' ? 'bg-yellow-500/20 text-yellow-300' : 'bg-gray-500/20 text-gray-300'}`;
+        document.getElementById('logout-button').onclick = () => signOut(auth);
+        populateTestSelection();
+        setupPremiumFeatures();
+    }
+
+    function populateTestSelection() {
+        const grid = document.getElementById('test-selection-grid');
+        grid.innerHTML = '';
+        const tests = [
+            { id: 'SAT', name: 'SAT', icon: 'fa-pencil-alt', desc: 'Math, Reading & Writing sections.' },
+            { id: 'TOEFL', name: 'TOEFL', icon: 'fa-globe-americas', desc: 'Test of English as a Foreign Language.' },
+            { id: 'IELTS', name: 'IELTS', icon: 'fa-book-reader', desc: 'International English Language Testing System.' }
+        ];
+
+        tests.forEach(test => {
+            const card = document.createElement('div');
+            card.className = "glass-card p-6 rounded-xl text-center hover:border-secondary-accent transition-all duration-300 cursor-pointer";
+            card.innerHTML = `<i class="fas ${test.icon} text-4xl text-secondary-accent mb-4"></i><h4 class="text-xl font-semibold mb-2">${test.name}</h4><p class="text-text-muted text-sm">${test.desc}</p>`;
+            card.onclick = () => showLevelSelection(test.id);
+            grid.appendChild(card);
+        });
+    }
+
+    function setupPremiumFeatures() {
+        const aiTutorCard = document.getElementById('ai-tutor-card');
+        if (currentUser.tier === 'premium') {
+            aiTutorCard.classList.add('premium-feature');
+            aiTutorCard.onclick = () => openAiTutorModal();
+        } else {
+            aiTutorCard.classList.add('disabled-feature');
+            aiTutorCard.onclick = () => showModalMessage('Premium Feature', 'Please upgrade your account to use the AI Tutor.');
+        }
+    }
+
+    function showLevelSelection(testSubject) {
+        const modal = document.getElementById('level-modal');
+        const title = document.getElementById('level-modal-title');
+        const grid = document.getElementById('level-selection-grid');
+
+        title.textContent = `Select ${testSubject} Level`;
+        grid.innerHTML = ''; // Clear previous options
+
+        const levels = [
+            { id: 'Basic', icon: 'fa-seedling', desc: 'For building foundational skills.'},
+            { id: 'Intermediate', icon: 'fa-chart-line', desc: 'For enhancing existing knowledge.'},
+            { id: 'Advanced', icon: 'fa-rocket', desc: 'For mastering advanced concepts.'}
+        ];
+
+        levels.forEach(level => {
+            const levelCard = document.createElement('div');
+            levelCard.className = "glass-card p-6 rounded-xl text-center hover:border-primary-accent transition-all duration-300 cursor-pointer";
+            levelCard.innerHTML = `
+                    <i class="fas ${level.icon} text-4xl text-primary-accent mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2">${level.id}</h4>
+                    <p class="text-text-muted text-sm">${level.desc}</p>
+                `;
+            const testId = `${testSubject}-${level.id}`;
+            levelCard.onclick = () => {
+                modal.classList.add('hidden');
+                loadTest(testId);
+            };
+            grid.appendChild(levelCard);
+        });
+
+        modal.classList.remove('hidden');
+    }
+
+    document.getElementById('level-modal-close-btn').onclick = () => {
+        document.getElementById('level-modal').classList.add('hidden');
+    };
+
+    // --- Test Logic ---
+    async function loadTest(testId) {
+        showView('loading');
+        try {
+            const testDoc = await getDoc(doc(db, "tests", testId));
+            if (!testDoc.exists()) throw new Error(`Test data for ${testId} not found.`);
+
+            const testData = testDoc.data();
+
+            let sectionKeys = Object.keys(testData).filter(k => k !== 'timeLimit');
+            let firstSection = sectionKeys[0];
+            let firstModule = Object.keys(testData[firstSection])[0];
+
+            currentTestState = {
+                testId: testId,
+                data: testData,
+                currentSection: firstSection,
+                currentModule: firstModule,
+                currentQuestionIndex: 0,
+                answers: {},
+                marked: {},
+                startTime: Date.now(),
+                timeRemaining: (testData.timeLimit || 30) * 60,
+            };
+
+            setupTestView();
+            showView('test');
+        } catch (error) {
+            console.error("Error loading test:", error);
+            showModalMessage('Error', error.message);
+            showView('dashboard');
+        }
+    }
+
+    function setupTestView() {
+        document.getElementById('back-to-dashboard-btn').onclick = () => {
+            if(confirm("Are you sure you want to exit? Your progress will not be saved.")) {
+                clearInterval(testTimerInterval);
+                showView('dashboard');
+            }
+        };
+        document.getElementById('finish-test-btn').onclick = finishTest;
+        document.getElementById('prev-question-btn').onclick = navigateQuestion.bind(null, -1);
+        document.getElementById('next-question-btn').onclick = navigateQuestion.bind(null, 1);
+        document.getElementById('mark-review-btn').onclick = markCurrentQuestion;
+        document.getElementById('ask-ai-btn').onclick = askAiTutor;
+
+        startTestTimer();
+        renderCurrentQuestion();
+    }
+
+    function startTestTimer() {
+        if (testTimerInterval) clearInterval(testTimerInterval);
+        const timerDisplay = document.getElementById('test-timer-display');
+
+        testTimerInterval = setInterval(() => {
+            if (currentTestState.timeRemaining > 0) {
+                currentTestState.timeRemaining--;
+                const minutes = Math.floor(currentTestState.timeRemaining / 60);
+                const seconds = currentTestState.timeRemaining % 60;
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            } else {
+                clearInterval(testTimerInterval);
+                timerDisplay.textContent = "00:00";
+                finishTest();
+            }
+        }, 1000);
+    }
+
+    function renderCurrentQuestion() {
+        const { testId, data, currentSection, currentModule, currentQuestionIndex } = currentTestState;
+        const sectionData = data[currentSection][currentModule];
+        const question = sectionData[currentQuestionIndex];
+
+        document.getElementById('test-view-title').textContent = `${testId.replace('-', ' ')} - ${capitalize(currentSection)}`;
+        document.getElementById('test-view-subtitle').textContent = `Module ${currentModule.replace('module', '')}`;
+        document.getElementById('question-number-display').textContent = `Question ${currentQuestionIndex + 1} of ${sectionData.length}`;
+
+        const passageEl = document.getElementById('question-passage');
+        if (question.passage) {
+            passageEl.textContent = question.passage;
+            passageEl.style.display = 'block';
+        } else {
+            passageEl.style.display = 'none';
+        }
+
+        document.getElementById('question-text').textContent = question.q || question.question;
+
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+        const options = question.options || question.opts;
+        options.forEach((opt, index) => {
+            const optEl = document.createElement('div');
+            optEl.className = 'option p-4 border-2 border-border-color rounded-lg cursor-pointer hover:border-primary-accent';
+            optEl.textContent = opt;
+
+            const sectionKey = `${currentSection}.${currentModule}`;
+            if (currentTestState.answers[sectionKey]?.[currentQuestionIndex] === index) {
+                optEl.classList.add('selected');
+            }
+
+            optEl.onclick = () => selectAnswer(index);
+            optionsContainer.appendChild(optEl);
+        });
+
+        document.getElementById('desmos-container').style.display = currentSection === 'math' ? 'block' : 'none';
+
+        const askAiBtn = document.getElementById('ask-ai-btn');
+        const aiContainer = document.getElementById('test-ai-tutor-container');
+        if(currentUser.tier !== 'premium') {
+            askAiBtn.disabled = true;
+            askAiBtn.innerHTML = `<i class="fas fa-lock mr-2"></i> Premium Only`;
+            aiContainer.classList.add('disabled-feature', 'premium-feature');
+        } else {
+            askAiBtn.disabled = false;
+            askAiBtn.innerHTML = `<i class="fas fa-robot mr-2"></i> Get a Hint`;
+            aiContainer.classList.remove('disabled-feature');
+            aiContainer.classList.add('premium-feature');
+        }
+
+        updateNavButtons();
+        updateQuestionGrid();
+        updateMarkButton();
+    }
+
+    function selectAnswer(optionIndex) {
+        const sectionKey = `${currentTestState.currentSection}.${currentTestState.currentModule}`;
+        if (!currentTestState.answers[sectionKey]) {
+            currentTestState.answers[sectionKey] = {};
+        }
+        currentTestState.answers[sectionKey][currentTestState.currentQuestionIndex] = optionIndex;
+        renderCurrentQuestion();
+    }
+
+    function navigateQuestion(direction) {
+        const newIndex = currentTestState.currentQuestionIndex + direction;
+        const sectionData = currentTestState.data[currentTestState.currentSection][currentTestState.currentModule];
+
+        if (newIndex >= 0 && newIndex < sectionData.length) {
+            currentTestState.currentQuestionIndex = newIndex;
+            renderCurrentQuestion();
+        }
+    }
+
+    function goToQuestion(index) {
+        currentTestState.currentQuestionIndex = index;
+        renderCurrentQuestion();
+    }
+
+    function updateNavButtons() {
+        const { currentQuestionIndex } = currentTestState;
+        const sectionData = currentTestState.data[currentTestState.currentSection][currentTestState.currentModule];
+        document.getElementById('prev-question-btn').disabled = currentQuestionIndex === 0;
+        document.getElementById('next-question-btn').disabled = currentQuestionIndex === sectionData.length - 1;
+    }
+
+    function updateQuestionGrid() {
+        const gridContainer = document.getElementById('question-grid-container');
+        gridContainer.innerHTML = '';
+        const sectionData = currentTestState.data[currentTestState.currentSection][currentTestState.currentModule];
+        const sectionKey = `${currentTestState.currentSection}.${currentTestState.currentModule}`;
+
+        sectionData.forEach((q, index) => {
+            const item = document.createElement('button');
+            item.textContent = index + 1;
+            let classes = 'grid-item h-10 w-10 flex items-center justify-center rounded-md font-semibold border-2 border-border-color transition-colors';
+            if (currentTestState.answers[sectionKey]?.[index] !== undefined) classes += ' answered';
+            if (currentTestState.marked[`${sectionKey}.${index}`]) classes += ' marked';
+            if (index === currentTestState.currentQuestionIndex) classes += ' current';
+            item.className = classes;
+            item.onclick = () => goToQuestion(index);
+            gridContainer.appendChild(item);
+        });
+    }
+
+    function markCurrentQuestion() {
+        const { currentSection, currentModule, currentQuestionIndex } = currentTestState;
+        const key = `${currentSection}.${currentModule}.${currentQuestionIndex}`;
+        currentTestState.marked[key] = !currentTestState.marked[key];
+        updateMarkButton();
+        updateQuestionGrid();
+    }
+
+    function updateMarkButton() {
+        const { currentSection, currentModule, currentQuestionIndex } = currentTestState;
+        const key = `${currentSection}.${currentModule}.${currentQuestionIndex}`;
+        const btn = document.getElementById('mark-review-btn');
+        if(currentTestState.marked[key]) {
+            btn.innerHTML = `<i class="fas fa-flag mr-2"></i> Marked`;
+            btn.classList.add('bg-yellow-500/20', 'text-yellow-300');
+        } else {
+            btn.innerHTML = `<i class="far fa-flag mr-2"></i> Mark for Review`;
+            btn.classList.remove('bg-yellow-500/20', 'text-yellow-300');
+        }
+    }
+
+    async function askAiTutor() {
+        showModalMessage("AI Tutor", `<div class="flex justify-center items-center"><div class="loader"></div></div>`);
+
+        const { data, currentSection, currentModule, currentQuestionIndex } = currentTestState;
+        const question = data[currentSection][currentModule][currentQuestionIndex];
+        const options = question.options || question.opts;
+
+        const prompt = `I am a student taking a practice test. I'm stuck on the following question. Please provide a helpful hint without giving away the direct answer.
+
+            Question: "${question.q || question.question}"
+
+            Options:
+            ${options.map((opt, i) => `${String.fromCharCode(65 + i)}. ${opt}`).join('\n')}
+            `;
+
+        try {
+            const hint = await callGeminiApi(prompt);
+            showModalMessage("AI Tutor's Hint", hint);
+        } catch (error) {
+            console.error("Gemini API error:", error);
+            showModalMessage("AI Tutor Error", "Sorry, I couldn't get a hint for you right now.");
+        }
+    }
+
+    async function callGeminiApi(prompt) {
+        const apiKey = ""; // This will be provided by the execution environment
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+        const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const errorBody = await response.text();
+            console.error("API Error Body:", errorBody);
+            throw new Error(`API request failed with status ${response.status}`);
+        }
+
+        const result = await response.json();
+        return result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't generate a response.";
+    }
+
+    function openAiTutorModal() {
+        const content = `
+                <p class="mb-4">You can ask the AI Tutor for help on any question during a test, or ask general study questions here.</p>
+                <div class="space-y-4">
+                    <textarea id="ai-tutor-prompt" class="w-full p-3 rounded-lg form-input h-32" placeholder="Ask a question about a concept, a problem, or a study strategy..."></textarea>
+                    <button id="ai-tutor-submit" class="btn-primary px-6 py-2 rounded-lg">Ask Gemini</button>
+                    <div id="ai-tutor-response-container" class="mt-4 p-4 bg-bg-secondary rounded-lg" style="display: none;">
+                        <h4 class="font-semibold mb-2">Gemini's Response:</h4>
+                        <div id="ai-tutor-response" class="prose prose-invert max-w-none"></div>
+                    </div>
+                </div>
+            `;
+        showModalMessage("AI Tutor", content);
+        document.getElementById('ai-tutor-submit').onclick = async () => {
+            const prompt = document.getElementById('ai-tutor-prompt').value;
+            if (!prompt) return;
+
+            const responseContainer = document.getElementById('ai-tutor-response-container');
+            const responseEl = document.getElementById('ai-tutor-response');
+            responseContainer.style.display = 'block';
+            responseEl.innerHTML = `<div class="flex justify-center items-center"><div class="loader"></div></div>`;
+
+            try {
+                const responseText = await callGeminiApi(`As a friendly AI tutor, please answer the following student question: ${prompt}`);
+                responseEl.innerText = responseText;
+            } catch (e) {
+                responseEl.innerText = "Sorry, an error occurred. Please try again.";
+            }
+        };
+    }
+
+
+    function finishTest() {
+        clearInterval(testTimerInterval);
+        let correctAnswers = 0;
+        let totalQuestions = 0;
+
+        const { data, answers } = currentTestState;
+
+        for(const sectionKey in answers) {
+            const [section, module] = sectionKey.split('.');
+            const sectionData = data[section][module];
+            const userAnswers = answers[sectionKey];
+
+            totalQuestions += sectionData.length;
+
+            for(const qIndex in userAnswers) {
+                if (sectionData[qIndex].correct === userAnswers[qIndex]) {
+                    correctAnswers++;
+                }
+            }
+        }
+
+        const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+        const resultsHtml = `
+                <h3 class="font-bold text-lg mb-2">Test Complete!</h3>
+                <p>You answered <strong class="text-primary-accent">${correctAnswers}</strong> out of <strong class="text-primary-accent">${totalQuestions}</strong> questions correctly.</p>
+                <div class="text-5xl font-bold my-6">Your Score: ${score}%</div>
+                <button id="modal-dashboard-btn" class="btn-primary px-6 py-2 rounded-lg">Back to Dashboard</button>
+             `;
+
+        showModalMessage('Test Results', resultsHtml);
+        document.getElementById('modal-dashboard-btn').onclick = () => {
+            document.getElementById('modal').classList.add('hidden');
+            showView('dashboard');
+        };
+    }
+
+    // --- Utility & Modal Logic ---
+    function showModalMessage(title, content) {
+        document.getElementById('modal-title').textContent = title;
+        document.getElementById('modal-content').innerHTML = content;
+        document.getElementById('modal').classList.remove('hidden');
+    }
+    document.getElementById('modal-close-btn').onclick = () => document.getElementById('modal').classList.add('hidden');
+    function showPrivacyPolicy() {
+        const policyText = `
+                <h3 class="font-bold text-lg mb-2">Privacy Policy</h3>
+                <p>Your privacy is important to us. It is ExamPrep Pro's policy to respect your privacy regarding any information we may collect from you.</p>
+                <h4 class="font-semibold mt-4 mb-2">1. Information We Collect</h4>
+                <p>We only collect information necessary to provide our service, such as your name, email, and test progress. All data is stored securely.</p>
+                <h4 class="font-semibold mt-4 mb-2">2. Use of Information</h4>
+                <p>Your information is used to personalize your learning experience, track your progress, and manage your account. We do not sell your personal data to third parties.</p>
+                <h4 class="font-semibold mt-4 mb-2">3. Security</h4>
+                <p>We use industry-standard security measures to protect your data.</p>
+            `;
+        showModalMessage('Privacy Policy', policyText);
+    }
+    function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    // --- Onboarding Logic (from tsion.html) ---
+    function setupOnboarding() {
+        const container = document.getElementById('onboarding-container');
+        container.innerHTML = `
+                <!-- This content is from tsion.html -->
+        <section id="intro" class="section active">
+        <h2 class="text-2xl text-center font-bold">Optimize Your Test Preparation</h2>
+        <p class="text-center text-text-muted mt-2 mb-8">Create a data-driven study plan tailored to your goals.</p>
+        <div class="navigation text-center">
+        <button onclick="startOnboardingSection('step1')" class="btn-primary"><i class="fas fa-play-circle mr-2"></i> Begin Assessment</button>
+        </div>
+        </section>
+            <!-- Onboarding Steps... -->
+        `;
+        }
+
+        // This would need the full HTML and logic from tsion.html to be fully functional.
+        // For now, it just shows the intro. A full implementation would have the multi-step form.
+        // On completion of the onboarding, you would call `markOnboardingComplete()`.
+
+        async function markOnboardingComplete() {
+            if (currentUser) {
+                await updateDoc(doc(db, "users", currentUser.uid), {
+                    onboardingComplete: true
+                });
+                // Reload the auth state to trigger dashboard view
+                onAuthStateChanged(auth, auth.currentUser);
+            }
+        }
+
+    </script>
+</body>
+</html>
+
